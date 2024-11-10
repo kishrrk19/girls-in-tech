@@ -7,6 +7,10 @@ import co.simplon.girls_in_tech_business.entities.Formation;
 
 @Repository
 public interface FormationJPARepository extends JpaRepository<Formation, Long> {
+
+	Formation findByName(String formationName);
+
+	Formation findByNameIgnoreCase(String inputFormation);
 	
 	
 

@@ -31,16 +31,26 @@ CREATE TABLE t_spots(
 );
 */
 
-SELECT * FROM t_formations tf ;
-SELECT * FROM t_schools ts  ;
-SELECT * FROM t_have th  ;
+--SELECT * FROM t_formations tf ;
+--SELECT * FROM t_schools ts  ;
+--SELECT * FROM t_cities tc ;
+--SELECT * FROM t_have th  ;
 
-DROP TABLE IF EXISTS t_formations;
-DROP TABLE IF EXISTS t_schools;
-DROP TABLE IF EXISTS t_cities;
-DROP TABLE IF EXISTS t_alumnis;
-DROP TABLE IF EXISTS t_have;
-DROP TABLE IF EXISTS t_graduate;
+
+
+DROP TABLE IF EXISTS t_have CASCADE;
+DROP TABLE IF EXISTS t_graduate CASCADE;
+DROP TABLE IF EXISTS t_formations CASCADE;
+DROP TABLE IF EXISTS t_schools CASCADE;
+DROP TABLE IF EXISTS t_cities CASCADE;
+DROP TABLE IF EXISTS t_alumnis CASCADE;
+
+CREATE TABLE t_cities(
+   id_city INT GENERATED ALWAYS AS IDENTITY,
+   city VARCHAR(50) NOT NULL,
+   CONSTRAINT t_cities_pkey PRIMARY KEY(id_city),
+   CONSTRAINT t_cities_ukey UNIQUE (city)
+);
 
 CREATE TABLE t_formations(
    id_formation INT GENERATED ALWAYS AS IDENTITY,
@@ -52,16 +62,13 @@ CREATE TABLE t_formations(
 CREATE TABLE t_schools(
    id_school INT GENERATED ALWAYS AS IDENTITY,
    school_name VARCHAR(200) NOT NULL,
+   city_id INT,
    CONSTRAINT t_schools_pkey PRIMARY KEY(id_school),
-   CONSTRAINT t_schools_ukey UNIQUE (school_name)
+   CONSTRAINT t_schools_ukey UNIQUE (school_name),
+   CONSTRAINT t_schools_city_fkey FOREIGN KEY(city_id) REFERENCES t_cities(id_city)  -- 町とのリレーション
 );
 
-CREATE TABLE t_cities(
-   id_city INT GENERATED ALWAYS AS IDENTITY,
-   city VARCHAR(50) NOT NULL,
-   CONSTRAINT t_cities_pkey PRIMARY KEY(id_city),
-   CONSTRAINT t_cities_ukey UNIQUE (city)
-);
+
 
 CREATE TABLE t_alumnis(
    id_alumni INT GENERATED ALWAYS AS IDENTITY,

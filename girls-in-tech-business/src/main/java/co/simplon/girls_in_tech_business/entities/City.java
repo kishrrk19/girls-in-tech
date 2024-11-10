@@ -1,10 +1,14 @@
 package co.simplon.girls_in_tech_business.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +22,9 @@ public class City {
 	
 	@Column(name="city")
 	String name;
+	
+	@OneToMany(mappedBy = "city")
+    private Set<School> schools = new HashSet<>();
 
 	public City() {
 	}
@@ -37,14 +44,18 @@ public class City {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public Set<School> getSchools() {
+		return schools;
+	}
+
+	public void setSchools(Set<School> schools) {
+		this.schools = schools;
+	}
 
 	@Override
 	public String toString() {
-		return "City [id=" + id + ", name=" + name + "]";
+		return "City [id=" + id + ", name=" + name + ", schools=" + schools + "]";
 	}
-	
-	
-	
-	
 
 }
