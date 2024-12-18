@@ -31,10 +31,10 @@ CREATE TABLE t_spots(
 );
 */
 
---SELECT * FROM t_formations tf ;
---SELECT * FROM t_schools ts  ;
---SELECT * FROM t_cities tc ;
---SELECT * FROM t_have th  ;
+SELECT * FROM t_formations tf ;
+SELECT * FROM t_schools ts  ;
+SELECT * FROM t_cities tc ;
+SELECT * FROM t_have th  ;
 
 
 
@@ -44,6 +44,7 @@ DROP TABLE IF EXISTS t_formations CASCADE;
 DROP TABLE IF EXISTS t_schools CASCADE;
 DROP TABLE IF EXISTS t_cities CASCADE;
 DROP TABLE IF EXISTS t_alumnis CASCADE;
+DROP TABLE IF EXISTS t_accounts;
 
 CREATE TABLE t_cities(
    id_city INT GENERATED ALWAYS AS IDENTITY,
@@ -93,4 +94,13 @@ CREATE TABLE t_graduate(
    CONSTRAINT t_graduate_pkey PRIMARY KEY(graduate_formation_school_id, graduate_alumni_id),
    CONSTRAINT t_graduate_alumnis_fkey FOREIGN KEY(graduate_alumni_id) REFERENCES t_alumnis(id_alumni),
    CONSTRAINT t_graduate_have_fkey FOREIGN KEY(graduate_formation_school_id) REFERENCES t_have(id_have)
+);
+
+CREATE TABLE t_accounts(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	username varchar(255),
+	password varchar(60),
+	
+	CONSTRAINT t_accounts_pkey PRIMARY KEY (id),
+	CONSTRAINT t_accounts_ukey UNIQUE (username)
 );

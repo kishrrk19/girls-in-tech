@@ -1,0 +1,22 @@
+<h1 class="text-center mt-3">Creer votre compte</h1>
+<div class="container" id="container">
+  <form class="d-flex flex-column mx-3" [formGroup]="accountCreationForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Votre adress mail</mat-label>
+      <input
+        matInput
+        placeholder="bonjour@example.com"
+        formControlName="username"
+        required
+      />
+      <mat-error *ngIf="accountCreationForm.get('username')?.invalid">{{ errorMessage }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Mot de passe</mat-label>
+      <input matInput type="password" formControlName="password" required />
+    </mat-form-field>
+    <div class="d-flex justify-content-center m-4">
+      <button class="btn btn-primary">Creer</button>
+    </div>
+  </form>
+</div>

@@ -1,8 +1,11 @@
 package co.simplon.girls_in_tech_business.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import co.simplon.girls_in_tech_business.dtos.FormationCreate;
+import co.simplon.girls_in_tech_business.dtos.FormationView;
 import co.simplon.girls_in_tech_business.entities.City;
 import co.simplon.girls_in_tech_business.entities.Formation;
 import co.simplon.girls_in_tech_business.entities.School;
@@ -38,8 +41,9 @@ public class FormationService {
 		if(city == null) {
 			city = new City();
 			city.setName(inputs.city());	
+			cities.save(city);
 		}
-		cities.save(city);
+		
 		
 		String inputSchool = inputs.schoolName();
 		inputSchool = inputSchool.trim();
@@ -50,8 +54,10 @@ public class FormationService {
 		if(school == null) {
 			school = new School();
 			school.setName(inputs.schoolName());
+			school.setCity(city);
+	        schools.save(school); 
 		}
-		school.setCity(city);
+		//school.setCity(city);
 		
 		String inputFormation = inputs.formationName();
 		inputFormation = inputFormation.trim();
@@ -64,14 +70,22 @@ public class FormationService {
 		if(formation == null) { // create
 			formation = new Formation();
 			formation.setName(inputs.formationName());
-		}
+			formation.getSchools().add(school); // Add school to formation
+	        formations.save(formation); // Save formation with the new school
+	    } else {
+	        // Formation already exists, add school if not already associated
+	        if (!formation.getSchools().contains(school)) {
+	            formation.getSchools().add(school);
+	            formations.save(formation); // Save only formation
+	        }
+	        };
 		
 		
-		formation.getSchools().add(school);
-		formations.save(formation);
-		
-		school.getFormations().add(formation);
-		schools.save(school);
+//		formation.getSchools().add(school);
+//		formations.save(formation);
+//		
+//		school.getFormations().add(formation);
+//		schools.save(school);
 		
 	}
 
@@ -87,5 +101,16 @@ public class FormationService {
         }
         return true;
     }
+
+//	public FormationView getOneFormation(Long autoId) {
+//		FormationView oneFormation;
+//		oneFormation = 
+//		
+//		return null;
+//	}
+
+	public List<FormationView> getFormationsList(Long formationId) {
+		return formations.findFormationListByFormationId(formationId);
+	}
 
 }

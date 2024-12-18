@@ -1,25 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { FormationSchool } from '../models/formation_school';
+import { ActivatedRoute } from '@angular/router';
 import { FormationSchoolComponent } from '../formation-school/formation-school.component';
-import { FormationSchoolsService } from '../services/formationSchools.service';
+import { FormationDataService } from '../services/formation-data.service';
 
 @Component({
   selector: 'app-formation-school-detail',
-  standalone: true,
-  imports: [FormationSchoolComponent],
   templateUrl: './formation-school-detail.component.html',
   styleUrl: './formation-school-detail.component.scss'
 })
 export class FormationSchoolDetailComponent implements OnInit {
-  formationsSchools!: FormationSchool[];
-  formationSchoolDetail! : FormationSchool;
-  title = 'girls-in-tech-front';
 
-  constructor(private formationSchoolsService: FormationSchoolsService){
+  schoolName: string ='';
+  formationName: string ='';
+  city: string = '';
+  constructor(private route: ActivatedRoute){
   }
 
   ngOnInit(): void {
-    this.formationsSchools = this.formationSchoolsService.getFormationSchools();
+    //クエリパラメーターを取得
+    this.route.queryParams.subscribe(params => {
+      this.schoolName = params['school'] || '';
+      this.formationName = params['formation'] || '';
+      this.city = params['city'] || '';
+}
+    );
 
   }
 }

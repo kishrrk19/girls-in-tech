@@ -3,8 +3,6 @@ import { FormationSchool } from '../models/formation_school';
 
 @Component({
   selector: 'app-formation-school',
-  standalone: true,
-  imports: [],
   templateUrl: './formation-school.component.html',
   styleUrl: './formation-school.component.scss'
 })
