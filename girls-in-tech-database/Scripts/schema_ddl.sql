@@ -35,7 +35,9 @@ SELECT * FROM t_formations tf ;
 SELECT * FROM t_schools ts  ;
 SELECT * FROM t_cities tc ;
 SELECT * FROM t_have th  ;
-
+SELECT * FROM t_accounts ta ;
+SELECT * FROM t_roles;
+SELECT * FROM t_associate;
 
 
 DROP TABLE IF EXISTS t_have CASCADE;
@@ -45,6 +47,8 @@ DROP TABLE IF EXISTS t_schools CASCADE;
 DROP TABLE IF EXISTS t_cities CASCADE;
 DROP TABLE IF EXISTS t_alumnis CASCADE;
 DROP TABLE IF EXISTS t_accounts;
+DROP TABLE IF EXISTS t_roles CASCADE;
+DROP TABLE IF EXISTS t_associate;
 
 CREATE TABLE t_cities(
    id_city INT GENERATED ALWAYS AS IDENTITY,
@@ -103,4 +107,22 @@ CREATE TABLE t_accounts(
 	
 	CONSTRAINT t_accounts_pkey PRIMARY KEY (id),
 	CONSTRAINT t_accounts_ukey UNIQUE (username)
+);
+
+CREATE TABLE t_roles(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	authority varchar(60),
+	default_role boolean,
+	CONSTRAINT t_roles_pkey PRIMARY KEY (id),
+	CONSTRAINT t_roles_ukey UNIQUE (authority)
+	);
+
+CREATE TABLE t_associate(
+	id_associate INT GENERATED ALWAYS AS IDENTITY,
+	associate_account_id INT,
+	associate_role_id INT,
+	CONSTRAINT t_associate_pkey PRIMARY KEY (id_associate),
+	CONSTRAINT t_associate_ukey UNIQUE (associate_account_id, associate_role_id),
+	CONSTRAINT t_associate_accounts_fkey FOREIGN KEY (associate_account_id) REFERENCES t_accounts(id),
+	CONSTRAINT t_associate_roles_fkey FOREIGN KEY (associate_role_id) REFERENCES t_roles(id)
 );

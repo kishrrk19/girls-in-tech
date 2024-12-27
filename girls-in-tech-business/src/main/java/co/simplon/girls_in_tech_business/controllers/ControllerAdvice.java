@@ -20,6 +20,7 @@ import co.simplon.girls_in_tech_business.controllers.errors.CustomErrors;
 
 @RestControllerAdvice
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
+	//データベースの一意制約違反。クライアントがすでに存在する値を挿入しようとした場合、DataIntegrityViolationException がスローされ、HTTP 409（CONFLICT）が返されます。
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     protected ResponseEntity<Object> handleDataIntegrityViolationExeption(DataIntegrityViolationException ex, WebRequest request) {
@@ -29,6 +30,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status,
             WebRequest request) {
+    	//リクエストボディのバリデーションエラー。必須フィールドが欠落している、値が無効などの場合、handleMethodArgumentNotValid が呼び出され、バリデーションエラーの詳細がレスポンスに含まれます。
         List<FieldError> errors = ex.getFieldErrors();
         CustomErrors customErrors = new CustomErrors();
         for (FieldError error : errors) {

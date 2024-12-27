@@ -14,7 +14,8 @@ import { FormationsListComponent} from './formations-list/formations-list.compon
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {CreateAccountComponent} from './create-account/create-account.component'
+import {CreateAccountComponent} from './create-account/create-account.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {CreateAccountComponent} from './create-account/create-account.component'
     HeaderComponent,
     FormationSchoolComponent,
     FormationsListComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
