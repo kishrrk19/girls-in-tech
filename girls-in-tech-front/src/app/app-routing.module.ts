@@ -5,12 +5,14 @@ import { FormationSchoolDetailComponent } from './formation-school-detail/format
 import { FormationsListComponent} from './formations-list/formations-list.component'
 import { CreateAccountComponent} from './create-account/create-account.component'
 import { LoginComponent } from './login/login.component';
+import { UpdateFormationSchoolComponent } from './update-formation-school/update-formation-school.component';
 
 const routes: Routes = [
   { path: 'create-formation-school', component: CreateFormationSchoolComponent },
   { path: 'school-detail', component: FormationSchoolDetailComponent },
   { path: 'formations-list/:formationId', component: FormationsListComponent },
   { path: 'create-account', component: CreateAccountComponent },
+  { path: 'update-formation-shool', component: UpdateFormationSchoolComponent },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/create-formation-school', pathMatch: 'full' }, // 初期ページ
   { path: '**', redirectTo: '/create-formation-school' } // 不明なURLのリダイレクト

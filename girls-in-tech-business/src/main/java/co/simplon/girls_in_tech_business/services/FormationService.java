@@ -5,13 +5,17 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import co.simplon.girls_in_tech_business.dtos.FormationCreate;
+import co.simplon.girls_in_tech_business.dtos.FormationUpdate;
 import co.simplon.girls_in_tech_business.dtos.FormationView;
 import co.simplon.girls_in_tech_business.entities.City;
 import co.simplon.girls_in_tech_business.entities.Formation;
+import co.simplon.girls_in_tech_business.entities.Have;
 import co.simplon.girls_in_tech_business.entities.School;
 import co.simplon.girls_in_tech_business.repositories.CityJPARepository;
 import co.simplon.girls_in_tech_business.repositories.FormationJPARepository;
+import co.simplon.girls_in_tech_business.repositories.HaveJPARepository;
 import co.simplon.girls_in_tech_business.repositories.SchoolJPARepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -21,11 +25,13 @@ public class FormationService {
 	private final FormationJPARepository formations;
 	private final SchoolJPARepository schools;
 	private final CityJPARepository cities;
+	private final HaveJPARepository haves;
 	
-	public FormationService(FormationJPARepository formations, SchoolJPARepository schools, CityJPARepository cities) {
+	public FormationService(FormationJPARepository formations, SchoolJPARepository schools, CityJPARepository cities, HaveJPARepository haves) {
 		this.formations = formations;
 		this.schools = schools;
 		this.cities = cities;
+		this.haves = haves;
 	}
 
 	@Transactional
@@ -111,6 +117,48 @@ public class FormationService {
 
 	public List<FormationView> getFormationsList(Long formationId) {
 		return formations.findFormationListByFormationId(formationId);
+	}
+
+	public FormationView getOneFormation(Long associateId) {
+		return haves.findFormationViewByHaveId(associateId);
+	}
+
+	public void updateFormation(Long associateId, @Valid FormationUpdate inputs) {
+		Have oneFormation = haves.findById(associateId)
+				.orElseThrow(() -> new EntityNotFoundException("Have not found with id " + associateId));
+		
+		Formation formation = formations.findByName(inputs.formationName());
+		if (formation == null) {
+			formation = new Formation();
+			formation.setName(inputs.formationName());
+			formation = formations.save(formation);
+			}
+		        
+
+		School school = schools.findByNameIgnoreCase(inputs.schoolName());
+		if (school == null) {
+			school = new School();
+			school.setName(inputs.schoolName());
+			school = schools.save(school);
+		}
+
+		City city = cities.findByName(inputs.city());
+		if (city == null) {
+			city = new City();
+			city.setName(inputs.city());
+			city = cities.save(city);
+		}
+		    // School の City を確認してマッチしない場合例外をスロー
+		if (!school.getCity().equals(city)) {
+		    school.setCity(city);
+		    schools.save(school);
+		}
+		    
+		oneFormation.setFormation(formation);
+		oneFormation.setSchool(school);
+		
+		haves.save(oneFormation);
+		
 	}
 
 }

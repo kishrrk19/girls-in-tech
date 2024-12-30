@@ -86,8 +86,9 @@ public class WebConfig {
 		return http.cors(Customizer.withDefaults()).csrf((csrf)-> csrf.disable())
 				.authorizeHttpRequests((req)-> req
 						.requestMatchers(HttpMethod.POST,"/account/creer-compte", "/account/login").anonymous()
-						.requestMatchers(HttpMethod.POST, "/formation/create").permitAll() 
-	                    .requestMatchers(HttpMethod.GET, "/formation/formations/*").permitAll() 
+						.requestMatchers(HttpMethod.POST, "/formation/create").permitAll()
+						.requestMatchers(HttpMethod.PUT, "/formation/update/*").permitAll()
+	                    .requestMatchers(HttpMethod.GET,  "/formation/*", "/formation/formations/*").permitAll() 
 						.anyRequest().authenticated()// 他は全部認証が必要
 						)
 				.oauth2ResourceServer((srv)-> srv.jwt(Customizer.withDefaults()))

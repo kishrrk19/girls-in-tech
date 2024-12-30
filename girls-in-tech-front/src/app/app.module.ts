@@ -16,6 +16,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {CreateAccountComponent} from './create-account/create-account.component';
 import { LoginComponent } from './login/login.component';
+import { UpdateFormationSchoolComponent } from './update-formation-school/update-formation-school.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { LoginComponent } from './login/login.component';
     FormationSchoolComponent,
     FormationsListComponent,
     CreateAccountComponent,
-    LoginComponent
+    LoginComponent,
+    UpdateFormationSchoolComponent
   ],
   imports: [
     BrowserModule,
