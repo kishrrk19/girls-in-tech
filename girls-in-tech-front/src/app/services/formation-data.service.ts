@@ -11,6 +11,8 @@ export class FormationDataService {
 
   private formationByHaveIdApiUrl = 'http://localhost:8080/formation';
 
+  private deleteFormationUrl = 'http://localhost:8080/formation/delete';
+
   constructor(private http: HttpClient) {}
 
   // IDに基づいてデータを取得するメソッド
@@ -24,5 +26,9 @@ export class FormationDataService {
 
   getDataByFormationSchoolAssociateId(id: number) : Observable<any>{
     return this.http.get(`${this.formationByHaveIdApiUrl}/${id}`);
+  }
+
+  deleteFormation(haveId : number) : Observable<any> {
+    return this.http.delete(`${this.deleteFormationUrl}/${haveId}`)
   }
 }

@@ -6,10 +6,12 @@ import { FormationsListComponent} from './formations-list/formations-list.compon
 import { CreateAccountComponent} from './create-account/create-account.component'
 import { LoginComponent } from './login/login.component';
 import { UpdateFormationSchoolComponent } from './update-formation-school/update-formation-school.component';
+import { FormationDetailComponent } from './formation-detail/formation-detail.component';
 
 const routes: Routes = [
   { path: 'create-formation-school', component: CreateFormationSchoolComponent },
-  { path: 'school-detail', component: FormationSchoolDetailComponent },
+  { path: 'school-detail', component: FormationSchoolDetailComponent },//will be decomissionned
+  { path: 'formation-detail/:haveId', component: FormationDetailComponent },
   { path: 'formations-list/:formationId', component: FormationsListComponent },
   { path: 'create-account', component: CreateAccountComponent },
   { path: 'update-formation-shool', component: UpdateFormationSchoolComponent },

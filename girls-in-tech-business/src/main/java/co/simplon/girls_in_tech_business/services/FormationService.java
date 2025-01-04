@@ -161,4 +161,9 @@ public class FormationService {
 		
 	}
 
+	public void deleteFormation(Long id) {
+		haves.deleteById(id);
+		
+	}
+
 }

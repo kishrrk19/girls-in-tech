@@ -88,6 +88,7 @@ public class WebConfig {
 						.requestMatchers(HttpMethod.POST,"/account/creer-compte", "/account/login").anonymous()
 						.requestMatchers(HttpMethod.POST, "/formation/create").permitAll()
 						.requestMatchers(HttpMethod.PUT, "/formation/update/*").permitAll()
+						.requestMatchers(HttpMethod.DELETE, "/formation/delete/*").permitAll()
 	                    .requestMatchers(HttpMethod.GET,  "/formation/*", "/formation/formations/*").permitAll() 
 						.anyRequest().authenticated()// 他は全部認証が必要
 						)

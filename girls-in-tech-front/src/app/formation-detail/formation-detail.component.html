@@ -1,0 +1,17 @@
+<div class="container">
+  <h1 class="text-center mt-3">Detail de la formation</h1>
+  <app-delete-dialog [onDelete] = "deleteData.bind(this)"></app-delete-dialog>
+  <div class="d-flex flex-row w-100">
+    <h2 class="flex-4">Nom de l'école : </h2>
+    <h2 class="flex-8 text-center">{{schoolName}}</h2>
+  </div>
+  <div class="d-flex flex-row w-100">
+    <h2 class="flex-4">Nom de la formation : </h2>
+    <h2 class="flex-8 text-center">{{formationName}}</h2>
+  </div>
+  
+  <div class="d-flex flex-row w-100">
+    <h3 class="flex-4">Lieu : </h3>
+    <h3 class="flex-8 text-center">{{city}}</h3>
+  </div>
+  </div>

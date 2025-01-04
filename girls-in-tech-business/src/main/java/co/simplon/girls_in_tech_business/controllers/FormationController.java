@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,5 +50,11 @@ public class FormationController {
 	@PutMapping("/update/{associateId}")
 	void updateFormation(@PathVariable("associateId") Long associateId, @Valid @RequestBody FormationUpdate inputs) {
 		service.updateFormation(associateId, inputs);
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Object> deleteFormation(@PathVariable Long id){
+		service.deleteFormation(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

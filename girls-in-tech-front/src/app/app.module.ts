@@ -17,6 +17,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {CreateAccountComponent} from './create-account/create-account.component';
 import { LoginComponent } from './login/login.component';
 import { UpdateFormationSchoolComponent } from './update-formation-school/update-formation-school.component';
+import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
+import { MatDialogActions, MatDialogContent, MatDialogModule} from '@angular/material/dialog';
+import { DeleteDialogContentComponent } from './dialogs/delete-dialog-content/delete-dialog-content.component';
+import { FormationDetailComponent } from './formation-detail/formation-detail.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -28,7 +33,10 @@ import { UpdateFormationSchoolComponent } from './update-formation-school/update
     FormationsListComponent,
     CreateAccountComponent,
     LoginComponent,
-    UpdateFormationSchoolComponent
+    UpdateFormationSchoolComponent,
+    DeleteDialogComponent,
+    DeleteDialogContentComponent,
+    FormationDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +47,11 @@ import { UpdateFormationSchoolComponent } from './update-formation-school/update
     NgbModule,
     MatFormFieldModule, 
     MatInputModule, 
-    FormsModule
+    FormsModule,
+    MatDialogModule,
+    MatDialogActions,
+    MatDialogContent,
+    MatButtonModule
   ],
   providers: [
     provideAnimationsAsync()
