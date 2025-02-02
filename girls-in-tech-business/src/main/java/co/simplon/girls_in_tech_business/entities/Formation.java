@@ -10,37 +10,35 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name= "t_formations")
-public class Formation {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_formation")
-	private Long id;
+public class Formation extends AbstractEntity{
 	
-	@Column(name= "formation_name")
-	String name;
+	@Column(name= "name")
+	private String name;
 	
-	@ManyToMany
-    @JoinTable(
-        name = "t_have",
-        joinColumns = @JoinColumn(name = "have_formation_id"),
-        inverseJoinColumns = @JoinColumn(name = "have_school_id")
-    )
-    private Set<School> schools = new HashSet<>();
+	@ManyToOne
+	@JoinColumn(name = "school_id")
+	private School school;
+	
+	@ManyToOne
+	@JoinColumn(name = "diploma_id")
+	private Diploma diploma;
+	
+	
+//	@ManyToMany
+//    @JoinTable(
+//        name = "t_have",
+//        joinColumns = @JoinColumn(name = "have_formation_id"),
+//        inverseJoinColumns = @JoinColumn(name = "have_school_id")
+//    )
+//    private Set<School> schools = new HashSet<>();
 
 	public Formation() {}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -50,18 +48,29 @@ public class Formation {
 		this.name = name;
 	}
 
-	public Set<School> getSchools() {
-		return schools;
+
+	public School getSchool() {
+		return school;
 	}
 
-	public void setSchools(Set<School> schools) {
-		this.schools = schools;
+	public void setSchool(School school) {
+		this.school = school;
 	}
-	
+
+	public Diploma getDiploma() {
+		return diploma;
+	}
+
+	public void setDiploma(Diploma diploma) {
+		this.diploma = diploma;
+	}
+
 	@Override
 	public String toString() {
-		return "Formation [id=" + id + ", name=" + name + ", schools=" + schools + "]";
-	};
+		return "Formation [name=" + name + ", school=" + school + "]";
+	}
+
+	;
 	
 	
 

@@ -16,32 +16,19 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name= "t_schools")
-public class School {
+public class School extends AbstractEntity{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name= "id_school")
-	private Long id;
-	
-	@Column(name= "school_name")
+	@Column(name= "name")
 	String name;
 	
-	@ManyToMany(mappedBy = "schools", cascade = CascadeType.PERSIST)
-    private Set<Formation> formations = new HashSet<>();
-	
+//	@ManyToMany(mappedBy = "schools", cascade = CascadeType.PERSIST)
+//    private Set<Formation> formations = new HashSet<>();
+//	
 	@ManyToOne
     @JoinColumn(name = "city_id", nullable = false)  // city_idでCityと紐付け
     private City city;
 
 	public School() {}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -49,14 +36,6 @@ public class School {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Set<Formation> getFormations() {
-		return formations;
-	}
-
-	public void setFormations(Set<Formation> formations) {
-		this.formations = formations;
 	}
 	
 	public City getCity() {
@@ -67,14 +46,9 @@ public class School {
 		this.city = city;
 	}
 
-	
 	@Override
 	public String toString() {
-		return "School [id=" + id + ", name=" + name + ", formations=" + formations + ", city=" + city + "]";
+		return "School [name=" + name + ", city=" + city + "]";
 	}
-	
-	
-	
-	
 
 }

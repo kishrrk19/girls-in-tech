@@ -35,26 +35,26 @@ public class FormationController {
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/formations/{formationId}")
-	public ResponseEntity<List<FormationView>> getFormations(@PathVariable Long formationId){
-		List<FormationView> formationsList = service.getFormationsList(formationId);
-		return ResponseEntity.ok(formationsList);
-	}
+//	@GetMapping("/formations/{formationId}")
+//	public ResponseEntity<List<FormationView>> getFormations(@PathVariable Long formationId){
+//		List<FormationView> formationsList = service.getFormationsList(formationId);
+//		return ResponseEntity.ok(formationsList);
+//	}
 	
-	@GetMapping("/{associateId}")
-	public ResponseEntity<FormationView> getOneFormation(@PathVariable Long associateId){
-		FormationView formation = service.getOneFormation(associateId);
-		return ResponseEntity.ok(formation);
-	}
+//	@GetMapping("/{associateId}")//used by update
+//	public ResponseEntity<FormationView> getOneFormation(@PathVariable Long associateId){
+//		FormationView formation = service.getOneFormation(associateId);
+//		return ResponseEntity.ok(formation);
+//	}
 
-	@PutMapping("/update/{associateId}")
-	void updateFormation(@PathVariable("associateId") Long associateId, @Valid @RequestBody FormationUpdate inputs) {
-		service.updateFormation(associateId, inputs);
-	}
-	
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Object> deleteFormation(@PathVariable Long id){
-		service.deleteFormation(id);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+//	@PutMapping("/update/{associateId}")
+//	void updateFormation(@PathVariable("associateId") Long associateId, @Valid @RequestBody FormationUpdate inputs) {
+//		service.updateFormation(associateId, inputs);
+//	}
+//	
+//	@DeleteMapping("/delete/{id}")
+//	public ResponseEntity<Object> deleteFormation(@PathVariable Long id){
+//		service.deleteFormation(id);
+//		return new ResponseEntity<>(HttpStatus.OK);
+//	}
 }

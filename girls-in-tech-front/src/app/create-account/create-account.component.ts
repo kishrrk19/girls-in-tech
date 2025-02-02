@@ -24,7 +24,7 @@ export class CreateAccountComponent implements OnInit{
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(20),
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{4,}$'),
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,20}$'),
       ]]
     })
 

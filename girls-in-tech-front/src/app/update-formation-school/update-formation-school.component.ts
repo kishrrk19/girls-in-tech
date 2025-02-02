@@ -17,7 +17,7 @@ export class UpdateFormationSchoolComponent implements OnInit{
 
   ngOnInit():void{
 
-    this.exepmleId =12;
+    this.exepmleId =2;
 
     this.formationDataService.getDataByFormationSchoolAssociateId(this.exepmleId).subscribe({
       next: (data) => {

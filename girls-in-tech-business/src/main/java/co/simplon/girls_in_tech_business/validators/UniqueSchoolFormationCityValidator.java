@@ -21,14 +21,15 @@ public class UniqueSchoolFormationCityValidator implements ConstraintValidator<U
 			return true;
 		}
 		
-		if(value instanceof FormationCreate) {
-			FormationCreate formationCreate = (FormationCreate) value;
-			return service.isUniqueCombination(formationCreate.formationName(), formationCreate.schoolName(), formationCreate.city());
-		}
-		if(value instanceof FormationUpdate) {
-			FormationUpdate formationUpdate = (FormationUpdate) value;
-			return service.isUniqueCombination(formationUpdate.formationName(), formationUpdate.schoolName(), formationUpdate.city());
-		}
-		return false;
+//		if(value instanceof FormationCreate) {
+//			FormationCreate formationCreate = (FormationCreate) value;
+//			return service.isUniqueCombination(formationCreate.formationName(), formationCreate.schoolName(), formationCreate.diplomaName());
+		return true;
+//		}
+//		if(value instanceof FormationUpdate) {
+//			FormationUpdate formationUpdate = (FormationUpdate) value;
+//			return service.isUniqueCombination(formationUpdate.formationName(), formationUpdate.schoolName(), formationUpdate.diplomaName(), formationUpdate.city());
+//		}
+//		return false;
 	}
 }

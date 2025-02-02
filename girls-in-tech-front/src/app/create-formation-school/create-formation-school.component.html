@@ -1,43 +1,62 @@
 <h1 class="text-center mt-3">Ajouter la formation de votre école</h1>
 <div class="container bg-light">
 <form class="d-flex flex-column mx-3" [formGroup]="formationCreationForm" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
+  <mat-form-field class="custom-mat-form-field">
     <label for="schoolName" class="fs-5 form-label">
-      Nom de l'école<span class="text-danger">*</span>
+      Nom de l'établissement<span class="text-danger">*</span>
     </label>
-    <input 
+    <input matInput  appearance="outline"
       type="text" 
       id="nomEcole" 
       class="form-control" 
       maxlength="200" 
       placeholder="max 200 charactères" 
-      formControlName="schoolName">
-  </div>
-  <div class="mb-3">
+      formControlName="schoolName"
+      (blur)="markFieldAsTouched('schoolName')">
+      <mat-error *ngIf="formationCreationForm.get('schoolName')?.touched && formationCreationForm.get('schoolName')?.invalid">{{ getErrorMessage('schoolName') }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="custom-mat-form-field">
     <label for="formationName" class="fs-5 form-label">
       Nom de la formation<span class="text-danger">*</span>
     </label>
-    <input 
+    <input matInput
       type="text"  
       class="form-control" 
       maxlength="200" 
       placeholder="max 200 charactères" 
-      formControlName="formationName">
-  </div>
-  <div class="mb-3">
+      formControlName="formationName"
+      (blur)="markFieldAsTouched('schoolName')">
+      <mat-error *ngIf="formationCreationForm.get('formationName')?.touched && formationCreationForm.get('formationName')?.invalid">{{ getErrorMessage('formationName') }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="custom-mat-form-field">
+    <label for="diplomaName" class="fs-5 form-label">
+      Nom du diplôme<span class="text-danger">*</span>
+    </label>
+    <input matInput
+      type="text"  
+      class="form-control" 
+      maxlength="200" 
+      placeholder="max 200 charactères" 
+      formControlName="diplomaName"
+      (blur)="markFieldAsTouched('schoolName')">
+      <mat-error *ngIf="formationCreationForm.get('diplomaName')?.touched && formationCreationForm.get('diplomaName')?.invalid">{{ getErrorMessage('diplomaName') }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="custom-mat-form-field">
     <label for="city" class="fs-5 form-label">
       Ville<span class="text-danger">*</span>
     </label>
-    <input 
+    <input matInput
       type="text" 
       class="form-control" 
       maxlength="50" 
-      formControlName="city">
-  </div>
+      formControlName="city"
+      (blur)="markFieldAsTouched('schoolName')">
+      <mat-error *ngIf="formationCreationForm.get('city')?.touched && formationCreationForm.get('city')?.invalid">{{ getErrorMessage('city') }}</mat-error>
+  </mat-form-field>
 
 
   <div class="d-flex justify-content-center m-4">
-    <button class="btn btn-primary">Ajouter</button>
+    <button class="btn btn-primary" [disabled]="formationCreationForm.invalid">Ajouter</button>
   </div>
 </form>
 </div>

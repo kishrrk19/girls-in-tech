@@ -17,6 +17,66 @@ html, body, *, ::before, ::after {
 }
 
 
+// /* Material Input を Bootstrap のスタイルに似せる */
+// .mat-form-field {
+//   width: 100%; /* Bootstrap に合わせて全幅表示 */
+// }
+
+// .mat-form-field-wrapper {
+//   padding: 0; /* Bootstrap の input の padding に合わせる */
+// }
+
+// .mat-form-field-flex {
+//   align-items: center; /* テキストが垂直方向で中央揃えになるようにする */
+// }
+
+// .mat-form-field.mat-form-field-type-mat-input .mat-input-element {
+//   background-color: transparent; /* Bootstrap の透明な背景に合わせる */
+//   border: 1px solid #ced4da; /* Bootstrap の input の border スタイル */
+//   border-radius: 0.375rem; /* Bootstrap の border-radius */
+//   padding: 0.375rem 0.75rem; /* Bootstrap の input の padding */
+//   font-size: 1rem; /* Bootstrap に合わせたフォントサイズ */
+//   line-height: 1.5; /* Bootstrap に合わせた行間 */
+//   color: #495057; /* Bootstrap の input テキスト色 */
+// }
+
+// .mat-form-field.mat-form-field-type-mat-input .mat-input-element:focus {
+//   border-color: #80bdff; /* Bootstrap の focus 色 */
+//   outline: 0;
+//   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Bootstrap の focus 時の影 */
+// }
+
+// .mat-form-field-label {
+//   font-size: 0.875rem; /* Bootstrap の label スタイルに近づける */
+//   color: #6c757d; /* Bootstrap の muted カラー */
+// }
+
+// /* エラー時のスタイル */
+// .mat-form-field.mat-form-field-invalid .mat-input-element {
+//   border-color: #dc3545; /* Bootstrap のエラー色 */
+//   box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+// }
+
+// .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+//   color: #dc3545;
+// }
+
+// /* mat-error を Bootstrap の小さなエラーメッセージに近づける */
+// .mat-error {
+//   font-size: 0.875rem;
+//   color: #dc3545; /* Bootstrap のエラーカラー */
+//   margin-top: 0.25rem;
+// }
+// ::ng-deep .mat-input-element::placeholder {
+//   color: #6c757d; /* 好みの色に変更 */
+//   opacity: 1; /* プレースホルダーの透明度を調整 */
+// }
+// .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+//   background-color: transparent;
+// }
+// :root {
+//   --mdc-filled-text-field-container-color: transparent; /* または任意の色 */
+// }
 
 // /* Importing Bootstrap SCSS file. */
 // @import 'bootstrap/scss/bootstrap';
