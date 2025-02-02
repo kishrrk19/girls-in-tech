@@ -1,0 +1,21 @@
+<div class="container">
+<h1>List des écoles de la formation selectionné :</h1>
+<h2>{{formationsListData[0].formationName}}</h2>
+
+<div *ngFor="let item of formationsListData">
+  <mat-card class="mb-3">
+    <mat-card-header>
+      <mat-card-title>{{ item.schoolName }}</mat-card-title>
+      <mat-card-subtitle>{{ item.formationName }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ item.city }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button 
+      [routerLink]="['/school-detail']" 
+      [queryParams]="{ school: item.schoolName, formation: item.formationName, city: item.city }" >Voir le détail</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+</div>

@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Supprimer formation</h2>
+<mat-dialog-content>
+  Voulez-vous vraiment supprimer l'information de la formation?
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close cdkFocusInitial (click)="closeDialog(false)">Non</button>
+  <button mat-button mat-dialog-close (click)="closeDialog(true)">Oui</button>
+</mat-dialog-actions>
+

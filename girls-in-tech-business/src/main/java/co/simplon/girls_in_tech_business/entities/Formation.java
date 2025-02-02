@@ -1,11 +1,17 @@
 package co.simplon.girls_in_tech_business.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name= "t_formations")
@@ -17,6 +23,14 @@ public class Formation {
 	
 	@Column(name= "formation_name")
 	String name;
+	
+	@ManyToMany
+    @JoinTable(
+        name = "t_have",
+        joinColumns = @JoinColumn(name = "have_formation_id"),
+        inverseJoinColumns = @JoinColumn(name = "have_school_id")
+    )
+    private Set<School> schools = new HashSet<>();
 
 	public Formation() {}
 
@@ -36,9 +50,17 @@ public class Formation {
 		this.name = name;
 	}
 
+	public Set<School> getSchools() {
+		return schools;
+	}
+
+	public void setSchools(Set<School> schools) {
+		this.schools = schools;
+	}
+	
 	@Override
 	public String toString() {
-		return "Formation [id=" + id + ", name=" + name + "]";
+		return "Formation [id=" + id + ", name=" + name + ", schools=" + schools + "]";
 	};
 	
 	

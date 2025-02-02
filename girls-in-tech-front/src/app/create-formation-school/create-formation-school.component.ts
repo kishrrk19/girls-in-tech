@@ -4,8 +4,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-formation-school',
-  standalone: true,
-  imports: [ReactiveFormsModule, HttpClientModule],
   templateUrl: './create-formation-school.component.html',
   styleUrl: './create-formation-school.component.scss'
 })
