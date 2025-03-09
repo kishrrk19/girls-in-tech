@@ -27,14 +27,21 @@ export class CreateFormationSchoolComponent implements OnInit{
 
       this.http.post('http://localhost:8080/formation/create', formData,{ observe: 'response' } ).subscribe(
         response => {
-          if(response.status === 202){
+          if(response.status === 201){
             alert("Votre formation est bien enregistrée!");
             this.formationCreationForm.reset();
           }
         },
         error => {
-          console.error('Erreur d envoie', error);
+          if(error.status === 400 && error.error.globalErrors?.includes("UniqueSchoolCityFormationDiploma")){
+            alert("Cette formation existe déjà.");
+          }else if(error.status === 409){
+            alert(error.error);
+          }
+          else{
+            console.error('Erreur d envoie', error);
           alert("Une erreur s'est produite. Veillez réessayer.");
+          }
         }
       );
     }

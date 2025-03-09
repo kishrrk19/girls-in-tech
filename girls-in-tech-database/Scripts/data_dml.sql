@@ -20,3 +20,11 @@ SELECT * FROM t_roles;
 SELECT * FROM t_associate;
 
 SELECT * FROM t_formations tf JOIN t_cities tc WHERE t_cities.name = 'Paris';
+
+DELETE FROM t_formations WHERE id = 3;
+DELETE FROM t_schools WHERE id = 5;
+
+SELECT * FROM t_formations tf JOIN t_diplomas td ON tf.diploma_id=td.id;
+SELECT * FROM t_formations tf JOIN t_schools ts ON tf.school_id =ts.id JOIN t_diplomas td ON tf.diploma_id=td.id;
+
+SELECT tf."name", ts."name", td."name", tc."name" FROM t_formations tf JOIN t_schools ts ON tf.school_id = ts.id JOIN t_diplomas td ON tf.diploma_id = td.id JOIN t_cities tc ON ts.city_id = tc.id WHERE tf.id = 1;

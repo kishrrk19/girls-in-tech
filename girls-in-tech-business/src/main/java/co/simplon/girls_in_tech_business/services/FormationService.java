@@ -1,11 +1,13 @@
 package co.simplon.girls_in_tech_business.services;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import co.simplon.girls_in_tech_business.dtos.FormationCreate;
+import co.simplon.girls_in_tech_business.dtos.FormationDetail;
 import co.simplon.girls_in_tech_business.dtos.FormationUpdate;
 import co.simplon.girls_in_tech_business.dtos.FormationView;
 import co.simplon.girls_in_tech_business.entities.City;
@@ -114,6 +116,14 @@ public class FormationService {
         return formation == null || !(formation.getSchool().equals(school) && 
         		formation.getDiploma().getName().equalsIgnoreCase(diplomaName));
     }
+
+	public List<FormationView> getAllFormations() {
+		return formations.findAllFormations();
+	}
+
+	public FormationDetail getFormationAllInfo(Long formationId) {
+		return formations.findFormationDetail(formationId);
+	}
 	
 
 //	public FormationView getOneFormation(Long autoId) {

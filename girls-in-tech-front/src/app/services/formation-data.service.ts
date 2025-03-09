@@ -13,9 +13,16 @@ export class FormationDataService {
 
   private deleteFormationUrl = 'http://localhost:8080/formation/delete';
 
+  private allFormationList = 'http://localhost:8080/formation/list';
+
+  private formationByFormationId = 'http://localhost:8080/formation'
+
   constructor(private http: HttpClient) {}
 
   // IDに基づいてデータを取得するメソッド
+  getAllFormations(): Observable<any> {
+    return this.http.get(`${this.allFormationList}`)
+  }
   getDataById(id: number): Observable<any> {
     return this.http.get(`${this.formationsListApiUrl}/${id}`);
   }
@@ -30,5 +37,9 @@ export class FormationDataService {
 
   deleteFormation(haveId : number) : Observable<any> {
     return this.http.delete(`${this.deleteFormationUrl}/${haveId}`)
+  }
+
+  getFormationDetailById(formationId : number) :Observable<any>{
+    return this.http.get(`${this.formationByFormationId}/${formationId}`)
   }
 }

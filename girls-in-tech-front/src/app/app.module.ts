@@ -22,6 +22,8 @@ import { MatDialogActions, MatDialogContent, MatDialogModule} from '@angular/mat
 import { DeleteDialogContentComponent } from './dialogs/delete-dialog-content/delete-dialog-content.component';
 import { FormationDetailComponent } from './formation-detail/formation-detail.component';
 import { MatButtonModule } from '@angular/material/button';
+import { FormationListHomeComponent } from './formation-list-home/formation-list-home.component';
+import { RouterLink } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { MatButtonModule } from '@angular/material/button';
     UpdateFormationSchoolComponent,
     DeleteDialogComponent,
     DeleteDialogContentComponent,
-    FormationDetailComponent
+    FormationDetailComponent,
+    FormationListHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatDialogModule,
     MatDialogActions,
     MatDialogContent,
-    MatButtonModule
+    MatButtonModule,
+    RouterLink
   ],
   providers: [
     provideAnimationsAsync()

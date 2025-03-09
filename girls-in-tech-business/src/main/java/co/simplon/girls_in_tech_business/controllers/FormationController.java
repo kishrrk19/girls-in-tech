@@ -1,5 +1,6 @@
 package co.simplon.girls_in_tech_business.controllers;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.girls_in_tech_business.dtos.FormationCreate;
+import co.simplon.girls_in_tech_business.dtos.FormationDetail;
 import co.simplon.girls_in_tech_business.dtos.FormationUpdate;
 import co.simplon.girls_in_tech_business.dtos.FormationView;
 import co.simplon.girls_in_tech_business.services.FormationService;
@@ -32,7 +34,20 @@ public class FormationController {
 	@PostMapping("/create")
 	ResponseEntity<Object> createFormation(@Valid @RequestBody FormationCreate inputs){
 		service.create(inputs);
-		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/list")
+	public ResponseEntity<HashSet<FormationView>> getAllFormations(){
+		List<FormationView> list = service.getAllFormations();
+		return ResponseEntity.ok(new HashSet<>(list));
+	}
+	
+	// créer un endpoint pour récupérer tous les données d'une formation par id de formation
+	@GetMapping("/{formationId}")
+	public ResponseEntity<FormationDetail> getFormationAllInfo(@PathVariable Long formationId){
+		FormationDetail formationDetail = service.getFormationAllInfo(formationId);
+		return ResponseEntity.ok(formationDetail);
 	}
 	
 //	@GetMapping("/formations/{formationId}")
