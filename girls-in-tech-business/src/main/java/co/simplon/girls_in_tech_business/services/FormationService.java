@@ -1,15 +1,14 @@
 package co.simplon.girls_in_tech_business.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import co.simplon.girls_in_tech_business.dtos.*;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import co.simplon.girls_in_tech_business.dtos.FormationCreate;
-import co.simplon.girls_in_tech_business.dtos.FormationDetail;
-import co.simplon.girls_in_tech_business.dtos.FormationUpdate;
-import co.simplon.girls_in_tech_business.dtos.FormationView;
 import co.simplon.girls_in_tech_business.entities.City;
 import co.simplon.girls_in_tech_business.entities.Diploma;
 import co.simplon.girls_in_tech_business.entities.Formation;
@@ -92,6 +91,8 @@ public class FormationService {
 			formation.setName(inputs.formationName());
 			formation.setSchool(school);
 			formation.setDiploma(diploma);
+			formation.setDescription((inputs.description() == null || inputs.description().isBlank()) ? null : inputs.description());
+			formation.setUrl((inputs.url() == null || inputs.url().isBlank()) ? null : inputs.url());
 				formations.save(formation); // Save formation with the new school
 	        } else {// すでにformationがある場合、saveすらしていないので、データベースにアクセスすらしていない。なのでエラーも発生しえない。
 	    	// Formation with the same name and school already exists
@@ -124,7 +125,20 @@ public class FormationService {
 	public FormationDetail getFormationAllInfo(Long formationId) {
 		return formations.findFormationDetail(formationId);
 	}
-	
+
+    public List<FormationSearchResult> searchFormation(Specification<Formation> spec) {
+		List<Formation> results = formations.findAll(spec);
+		List<FormationSearchResult> resultsList= new ArrayList<>();
+		for(Formation result : results){
+			resultsList.add(new FormationSearchResult(result));
+		}
+		return resultsList;
+    }
+
+	public FormationToUpdate getFormationInfoToUpdate(Long formationId) {
+		return formations.findFormationToUpdate(formationId);
+	}
+
 
 //	public FormationView getOneFormation(Long autoId) {
 //		FormationView oneFormation;
@@ -141,47 +155,55 @@ public class FormationService {
 //		return haves.findFormationViewByHaveId(associateId);
 //	}
 //
-//	public void updateFormation(Long associateId, @Valid FormationUpdate inputs) {
-//		Have oneFormation = haves.findById(associateId)
-//				.orElseThrow(() -> new EntityNotFoundException("Have not found with id " + associateId));
-//		
-//		Formation formation = formations.findByName(inputs.formationName());
-//		if (formation == null) {
-//			formation = new Formation();
-//			formation.setName(inputs.formationName());
-//			formation = formations.save(formation);
-//			}
-//		        
-//
-//		School school = schools.findByNameIgnoreCase(inputs.schoolName());
-//		if (school == null) {
-//			school = new School();
-//			school.setName(inputs.schoolName());
-//			school = schools.save(school);
-//		}
-//
-//		City city = cities.findByName(inputs.city());
-//		if (city == null) {
-//			city = new City();
-//			city.setName(inputs.city());
-//			city = cities.save(city);
-//		}
-//		    // School の City を確認してマッチしない場合例外をスロー
-//		if (!school.getCity().equals(city)) {
-//		    school.setCity(city);
-//		    schools.save(school);
-//		}
-//		    
-//		oneFormation.setFormation(formation);
-//		oneFormation.setSchool(school);
-//		
-//		haves.save(oneFormation);
-//		
-//	}
-//
-//	public void deleteFormation(Long id) {
-//		haves.deleteById(id);
-//		
-//	}
+	public void updateFormation(Long formationId, @Valid FormationUpdate inputs) {
+		Formation formationToUpdate = formations.findById(formationId)
+				.orElseThrow(() -> new EntityNotFoundException("Have not found with id " + formationId));
+
+		formationToUpdate.setName(inputs.formationName());
+		formationToUpdate.setUrl(
+				(inputs.url() == null || inputs.url().isBlank()) ? null : inputs.url()
+		);
+		formationToUpdate.setDescription(
+				(inputs.description() == null || inputs.description().isBlank()) ? null : inputs.description()
+		);
+
+		Diploma diploma = diplomas.findByNameIgnoreCase(inputs.diplomaName());
+		if(diploma == null){
+			diploma = new Diploma();
+			diploma.setName(inputs.diplomaName());
+			diploma = diplomas.save(diploma);
+		}
+		City city = cities.findByName(inputs.city());
+		if (city == null) {
+			city = new City();
+			city.setName(inputs.city());
+			city = cities.save(city);
+		}
+
+		School school = schools.findByNameIgnoreCaseAndCityId(inputs.schoolName(), city.getId());
+		if (school == null) {
+			school = new School();
+			school.setName(inputs.schoolName());
+			school.setCity(city);
+			school = schools.save(school);
+		}
+
+		    // School の City を確認してマッチしない場合例外をスロー
+		if (!school.getCity().equals(city)) {
+		    school.setCity(city);
+		    schools.save(school);
+		}
+
+		formationToUpdate.setSchool(school);
+		formationToUpdate.setDiploma(diploma);
+		formationToUpdate.setSchool(school);
+
+		formations.save(formationToUpdate);
+
+	}
+
+	public void deleteFormation(Long id) {
+		formations.deleteById(id);
+	}
 
 }

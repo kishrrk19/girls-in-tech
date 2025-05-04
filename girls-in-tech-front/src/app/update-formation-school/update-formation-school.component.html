@@ -1,42 +1,46 @@
 <h1 class="text-center mt-3">Modifier l'information de votre formation</h1>
-<div class="container bg-light">
-<form *ngIf="formationUpdateForm" class="d-flex flex-column mx-3" [formGroup]="formationUpdateForm" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
-    <label for="schoolName" class="fs-5 form-label">
-      Nom de l'école<span class="text-danger">*</span>
-    </label>
-    <input 
-      type="text" 
-      class="form-control" 
-      maxlength="200" 
-      placeholder="max 200 charactères" 
-      formControlName="schoolName">
-  </div>
-  <div class="mb-3">
-    <label for="formationName" class="fs-5 form-label">
-      Nom de la formation<span class="text-danger">*</span>
-    </label>
-    <input 
-      type="text"  
-      class="form-control" 
-      maxlength="200" 
-      placeholder="max 200 charactères" 
-      formControlName="formationName">
-  </div>
-  <div class="mb-3">
-    <label for="city" class="fs-5 form-label">
-      Ville<span class="text-danger">*</span>
-    </label>
-    <input 
-      type="text" 
-      class="form-control" 
-      maxlength="50" 
-      formControlName="city">
-  </div>
+<div class="container">
+  <form *ngIf="formationUpdateForm" class="d-flex flex-column mx-3" [formGroup]="formationUpdateForm"
+    (ngSubmit)="onSubmit()">
+    <mat-form-field class="custom-mat-form-field">
+      <label for="schoolName" class="fs-5">
+        Nom de l'école<span class="text-danger">*</span>
+      </label>
+      <input matInput type="text" maxlength="200" placeholder="max 200 charactères" formControlName="schoolName">
+    </mat-form-field>
+    <mat-form-field class="custom-mat-form-field">
+      <label for="formationName" class="fs-5">
+        Nom de la formation<span class="text-danger">*</span>
+      </label>
+      <input matInput type="text" maxlength="200" placeholder="max 200 charactères" formControlName="formationName">
+    </mat-form-field>
+    <mat-form-field class="custom-mat-form-field">
+      <label for="diplomaName" class="fs-5">
+        Nom du diplôme<span class="text-danger">*</span>
+      </label>
+      <input matInput type="text" maxlength="200" formControlName="diplomaName">
+    </mat-form-field>
+    <mat-form-field class="custom-mat-form-field">
+      <label for="city" class="fs-5">
+        Ville<span class="text-danger">*</span>
+      </label>
+      <input matInput type="text" maxlength="50" formControlName="city">
+    </mat-form-field>
+    <mat-form-field class="custom-mat-form-field">
+      <label for="description" class="fs-5">
+        Description de votre formation
+      </label>
+      <input matInput type="text" maxlength="1000" formControlName="description">
+    </mat-form-field>
+    <mat-form-field class="custom-mat-form-field">
+      <label for="url" class="fs-5">
+        URL de votre formation
+      </label>
+      <input matInput type="text" maxlength="2083" formControlName="url">
+    </mat-form-field>
 
-
-  <div class="d-flex justify-content-center m-4">
-    <button class="btn btn-primary">Modifier</button>
-  </div>
-</form>
+    <div class="d-flex justify-content-center m-4">
+      <button class="btn btn-primary">Modifier</button>
+    </div>
+  </form>
 </div>

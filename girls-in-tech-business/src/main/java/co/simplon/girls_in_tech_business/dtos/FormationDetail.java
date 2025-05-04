@@ -4,5 +4,7 @@ public record FormationDetail(Long formationId,
 		String formationName,
 		String schoolName,
 		String diplomaName,
-		String city) {
+		String city,
+		String description,
+		String url) {
 }

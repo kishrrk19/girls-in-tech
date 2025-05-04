@@ -1,0 +1,62 @@
+<h1 class="text-center mt-3">Rechercher des formations</h1>
+<div class="container d-flex flex">
+<form class="d-flex flex mx-3" [formGroup]="formationRechercheForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="custom-mat-form-field search-box">
+    <label for="schoolName" class="fs-5">
+      Nom de l'établissement
+    </label>
+    <input matInput  
+      type="text" 
+      id="nomEcole" 
+      class="input-padding-top"
+      maxlength="200" 
+      placeholder="Ex: Simplon" 
+      formControlName="schoolName"
+      (blur)="markFieldAsTouched('schoolName')">
+      <mat-error *ngIf="formationRechercheForm.get('schoolName')?.touched && formationRechercheForm.get('schoolName')?.invalid">{{ getErrorMessage('schoolName') }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="custom-mat-form-field search-box">
+    <label for="formationName" class="fs-5">
+      Nom de la formation
+    </label>
+    <input matInput
+      type="text"  
+      class="input-padding-top"
+      maxlength="200" 
+      placeholder="Ex: IT school" 
+      formControlName="formationName"
+      (blur)="markFieldAsTouched('schoolName')">
+      <mat-error *ngIf="formationRechercheForm.get('formationName')?.touched && formationRechercheForm.get('formationName')?.invalid">{{ getErrorMessage('formationName') }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="custom-mat-form-field search-box">
+    <label for="diplomaName" class="fs-5">
+      Nom du diplôme
+    </label>
+    <input matInput
+      type="text"
+      class="input-padding-top"
+      maxlength="200" 
+      placeholder="Ex:Développeur" 
+      formControlName="diplomaName"
+      (blur)="markFieldAsTouched('schoolName')">
+      <mat-error *ngIf="formationRechercheForm.get('diplomaName')?.touched && formationRechercheForm.get('diplomaName')?.invalid">{{ getErrorMessage('diplomaName') }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="custom-mat-form-field search-box">
+    <label for="city" class="fs-5">
+      Ville
+    </label>
+    <input matInput
+      type="text" 
+      class="input-padding-top"
+      maxlength="50" 
+      placeholder="Ex: Paris" 
+      formControlName="city"
+      (blur)="markFieldAsTouched('schoolName')">
+      <mat-error *ngIf="formationRechercheForm.get('city')?.touched && formationRechercheForm.get('city')?.invalid">{{ getErrorMessage('city') }}</mat-error>
+  </mat-form-field>
+  <div class="d-flex m-4">
+    <button mat-raised-button [disabled]="formationRechercheForm.invalid">
+        <mat-icon>search</mat-icon>Rechercher</button>
+  </div>
+</form>
+</div>

@@ -27,14 +27,13 @@ export class FormationSchoolDetailComponent implements OnInit {
   ngOnInit(): void {
     //クエリパラメーターを取得
     //ici faire une nouvelle requête http by id de formation pour récupérer toutes les informations de cette formation y compris description, alumni
-    this.route.paramMap.subscribe(params => {
-      console.log(params);
-      this.formationId = +params.get('id')!;
-      console.log(this.formationId);
-      this.formationDataService.getFormationDetailById(this.formationId).subscribe({
+    this.route.queryParams.subscribe(params => {
+      const id = params['id'];
+      console.log(id);
+      this.formationDataService.getFormationDetailById(id).subscribe({
         next: (data) => {this.formationsListData = data;
           console.log("new implemented",this.formationsListData);
-          this.cdr.detectChanges();
+          //this.cdr.detectChanges();
         },
         error: (error) => console.error('error occured:', error),
         complete: () => console.log('data is retrieved')

@@ -27,4 +27,24 @@ DELETE FROM t_schools WHERE id = 5;
 SELECT * FROM t_formations tf JOIN t_diplomas td ON tf.diploma_id=td.id;
 SELECT * FROM t_formations tf JOIN t_schools ts ON tf.school_id =ts.id JOIN t_diplomas td ON tf.diploma_id=td.id;
 
-SELECT tf."name", ts."name", td."name", tc."name" FROM t_formations tf JOIN t_schools ts ON tf.school_id = ts.id JOIN t_diplomas td ON tf.diploma_id = td.id JOIN t_cities tc ON ts.city_id = tc.id WHERE tf.id = 1;
+SELECT f.*
+FROM t_formations f
+JOIN t_schools s ON f.school_id = s.id
+JOIN t_diplomas d ON f.diploma_id = d.id
+JOIN t_cities c ON s.city_id = c.id
+WHERE
+    (:courseName IS NULL OR LOWER(f.name) LIKE LOWER(CONCAT('%', :courseName, '%')))
+    AND (:schoolName IS NULL OR LOWER(s.name) LIKE LOWER(CONCAT('%', :schoolName, '%')))
+    AND (:diplomaName IS NULL OR LOWER(d.name) LIKE LOWER(CONCAT('%', :diplomaName, '%')))
+    AND (:cityName IS NULL OR LOWER(c.name) LIKE LOWER(CONCAT('%', :cityName, '%')));
+
+SELECT f."name", s."name", d."name", c."name"
+FROM t_formations f
+JOIN t_schools s ON f.school_id = s.id
+JOIN t_diplomas d ON f.diploma_id = d.id
+JOIN t_cities c ON s.city_id = c.id
+WHERE LOWER(d.name) LIKE LOWER(CONCAT('%ingénieur%'))
+    AND LOWER(c.name) LIKE LOWER(CONCAT('%Paris%'));
+
+
+SELECT tf."name", ts."name", td."name", tc."name", tf.description, tf.url FROM t_formations tf JOIN t_schools ts ON tf.school_id = ts.id JOIN t_diplomas td ON tf.diploma_id = td.id JOIN t_cities tc ON ts.city_id = tc.id WHERE tf.id = 1;

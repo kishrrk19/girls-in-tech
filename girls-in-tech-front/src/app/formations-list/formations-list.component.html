@@ -1,8 +1,9 @@
 <div class="container">
-<h1>List des écoles de la formation selectionné :</h1>
-<h2>{{formationsListData[0].formationName}}</h2>
+<h1>Resultat des formations de votre requête :</h1>
+<h2><span>Mots clés : </span><span *ngFor="let key of queryKeys; let i = index"><span>{{key}}<span *ngIf="i < queryKeys.length - 1">, </span></span></span>
+</h2>
 
-<div *ngFor="let item of formationsListData">
+<div *ngFor="let item of formationsResultList">
   <mat-card class="mb-3">
     <mat-card-header>
       <mat-card-title>{{ item.schoolName }}</mat-card-title>
@@ -13,8 +14,7 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-button 
-      [routerLink]="['/school-detail']" 
-      [queryParams]="{ school: item.schoolName, formation: item.formationName, city: item.city }" >Voir le détail</button>
+      (click)="openDetail(item.id)" >Voir le détail</button>
     </mat-card-actions>
   </mat-card>
 </div>

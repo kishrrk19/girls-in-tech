@@ -3,6 +3,10 @@ package co.simplon.girls_in_tech_business.controllers;
 import java.util.HashSet;
 import java.util.List;
 
+import co.simplon.girls_in_tech_business.dtos.*;
+import co.simplon.girls_in_tech_business.entities.Formation;
+import co.simplon.girls_in_tech_business.repositories.FormationSpecification;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,10 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.simplon.girls_in_tech_business.dtos.FormationCreate;
-import co.simplon.girls_in_tech_business.dtos.FormationDetail;
-import co.simplon.girls_in_tech_business.dtos.FormationUpdate;
-import co.simplon.girls_in_tech_business.dtos.FormationView;
 import co.simplon.girls_in_tech_business.services.FormationService;
 import jakarta.validation.Valid;
 
@@ -49,7 +49,29 @@ public class FormationController {
 		FormationDetail formationDetail = service.getFormationAllInfo(formationId);
 		return ResponseEntity.ok(formationDetail);
 	}
-	
+
+	@PostMapping ("/search")
+	public List<FormationSearchResult> searchFormations(@RequestBody FormationSearch formationSearch){
+		Specification<Formation> spec = Specification
+				.where(FormationSpecification.formationNameContains(formationSearch.formationName()))
+				.and(FormationSpecification.schoolNameContains(formationSearch.schoolName()))
+				.and(FormationSpecification.diplomaNameContains(formationSearch.diplomaName()))
+				.and(FormationSpecification.cityNameContains(formationSearch.city()));
+		return service.searchFormation(spec);
+	}
+
+	//For UPDATE
+	@GetMapping("to-update/{formationId}")
+	public ResponseEntity<FormationToUpdate> getFormationToUpdate(@PathVariable Long formationId){
+		FormationToUpdate formationToUpdate = service.getFormationInfoToUpdate(formationId);
+		return ResponseEntity.ok(formationToUpdate);
+	}
+
+	@PutMapping("/update/{formationId}")
+	void updateFormation(@PathVariable("formationId") Long formationId, @Valid @RequestBody FormationUpdate inputs) {
+		service.updateFormation(formationId, inputs);
+	}
+
 //	@GetMapping("/formations/{formationId}")
 //	public ResponseEntity<List<FormationView>> getFormations(@PathVariable Long formationId){
 //		List<FormationView> formationsList = service.getFormationsList(formationId);
@@ -62,14 +84,9 @@ public class FormationController {
 //		return ResponseEntity.ok(formation);
 //	}
 
-//	@PutMapping("/update/{associateId}")
-//	void updateFormation(@PathVariable("associateId") Long associateId, @Valid @RequestBody FormationUpdate inputs) {
-//		service.updateFormation(associateId, inputs);
-//	}
-//	
-//	@DeleteMapping("/delete/{id}")
-//	public ResponseEntity<Object> deleteFormation(@PathVariable Long id){
-//		service.deleteFormation(id);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Object> deleteFormation(@PathVariable Long id){
+		service.deleteFormation(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

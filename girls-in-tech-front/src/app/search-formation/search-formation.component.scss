@@ -1,0 +1,35 @@
+.input-padding-top {
+    margin-top: 12px; /* または padding-top */
+  }
+
+.search-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 120px; /* 高さを十分にとる */
+    padding: 8px;
+  }
+
+  .search-box label {
+    display: block;
+  margin-bottom: 8px;
+
+  /* 高さを固定して、折り返しても下のinputがズレないようにする */
+  height: 48px;  /* ラベルの高さを固定 */
+  line-height: 1.2;
+  overflow: hidden;
+  }
+
+  .search-box input {
+    flex-grow: 1;
+  }
+
+  button{
+    margin-top: 15%;
+    min-height: 50px;
+  }
+
+mat-icon {
+    font-family: 'Material Icons', sans-serif !important;
+  }
+  

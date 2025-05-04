@@ -21,4 +21,5 @@ public interface SchoolJPARepository extends JpaRepository<School, Long>{
 
 	School findByName(@NotBlank @Size(max = 200) String schoolName);
 
+	School findByNameIgnoreCaseAndCityId(@NotBlank @Size(max= 200) String s, Long id);
 }

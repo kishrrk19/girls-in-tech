@@ -34,7 +34,7 @@ CREATE TABLE t_spots(
 
 DROP TABLE IF EXISTS t_cities CASCADE;
 DROP TABLE IF EXISTS t_graduate CASCADE;
-DROP TABLE IF EXISTS t_diplomas;
+DROP TABLE IF EXISTS t_diplomas CASCADE;
 DROP TABLE IF EXISTS t_schools CASCADE;
 DROP TABLE IF EXISTS t_formations CASCADE;
 DROP TABLE IF EXISTS t_alumnis CASCADE;
@@ -72,6 +72,8 @@ CREATE TABLE t_formations(
    name VARCHAR(200) NOT NULL,
    school_id INT,
    diploma_id INT,
+   description VARCHAR(1000),
+   url VARCHAR(2083) unique,
    CONSTRAINT t_formations_schools_fkey FOREIGN KEY(school_id) REFERENCES t_schools(id),
    CONSTRAINT t_formations_diplomas_fkey FOREIGN KEY(diploma_id) REFERENCES t_diplomas(id),
    CONSTRAINT t_formations_pkey PRIMARY KEY(id, school_id),

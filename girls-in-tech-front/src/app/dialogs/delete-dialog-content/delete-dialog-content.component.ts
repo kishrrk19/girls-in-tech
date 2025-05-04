@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-delete-dialog-content',
@@ -8,9 +8,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class DeleteDialogContentComponent {
 
-  constructor(private dialogRef: MatDialogRef<DeleteDialogContentComponent>){}
+  constructor(private dialogRef: MatDialogRef<DeleteDialogContentComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
-  closeDialog(result: boolean) : void {
+  closeDialog(result: boolean): void {
     this.dialogRef.close(result);
   }
 

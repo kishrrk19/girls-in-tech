@@ -6,4 +6,6 @@ export interface formationData {
   schoolName: string;
   diplomaName: string;
   city: string;
+  description : string;
+  url: string;
 }

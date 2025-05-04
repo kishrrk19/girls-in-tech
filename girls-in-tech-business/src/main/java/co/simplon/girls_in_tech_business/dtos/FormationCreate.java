@@ -10,6 +10,8 @@ public record FormationCreate(
 		@NotBlank @Size(max=200) String formationName,
 		@NotBlank @Size(max=200) String schoolName,
 		@NotBlank @Size(max=200) String diplomaName,
-		@NotBlank @Size(max=50) String city 
+		@NotBlank @Size(max=50) String city,
+		@Size(max=1000) String description,
+		@Size(max=2083) String url
 		) {
 }

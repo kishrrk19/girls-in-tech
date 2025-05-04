@@ -3,16 +3,7 @@ package co.simplon.girls_in_tech_business.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name= "t_formations")
@@ -21,13 +12,19 @@ public class Formation extends AbstractEntity{
 	@Column(name= "name")
 	private String name;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "school_id")
 	private School school;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "diploma_id")
 	private Diploma diploma;
+
+	@Column(name="description")
+	private String description;
+
+	@Column(name="url")
+	private String url;
 	
 	
 //	@ManyToMany
@@ -70,7 +67,23 @@ public class Formation extends AbstractEntity{
 		return "Formation [name=" + name + ", school=" + school + "]";
 	}
 
-	;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    ;
 	
 	
 

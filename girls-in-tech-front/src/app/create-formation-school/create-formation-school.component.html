@@ -1,62 +1,67 @@
 <h1 class="text-center mt-3">Ajouter la formation de votre école</h1>
-<div class="container bg-light">
-<form class="d-flex flex-column mx-3" [formGroup]="formationCreationForm" (ngSubmit)="onSubmit()">
-  <mat-form-field class="custom-mat-form-field">
-    <label for="schoolName" class="fs-5 form-label">
-      Nom de l'établissement<span class="text-danger">*</span>
-    </label>
-    <input matInput  appearance="outline"
-      type="text" 
-      id="nomEcole" 
-      class="form-control" 
-      maxlength="200" 
-      placeholder="max 200 charactères" 
-      formControlName="schoolName"
-      (blur)="markFieldAsTouched('schoolName')">
-      <mat-error *ngIf="formationCreationForm.get('schoolName')?.touched && formationCreationForm.get('schoolName')?.invalid">{{ getErrorMessage('schoolName') }}</mat-error>
-  </mat-form-field>
-  <mat-form-field class="custom-mat-form-field">
-    <label for="formationName" class="fs-5 form-label">
-      Nom de la formation<span class="text-danger">*</span>
-    </label>
-    <input matInput
-      type="text"  
-      class="form-control" 
-      maxlength="200" 
-      placeholder="max 200 charactères" 
-      formControlName="formationName"
-      (blur)="markFieldAsTouched('schoolName')">
-      <mat-error *ngIf="formationCreationForm.get('formationName')?.touched && formationCreationForm.get('formationName')?.invalid">{{ getErrorMessage('formationName') }}</mat-error>
-  </mat-form-field>
-  <mat-form-field class="custom-mat-form-field">
-    <label for="diplomaName" class="fs-5 form-label">
-      Nom du diplôme<span class="text-danger">*</span>
-    </label>
-    <input matInput
-      type="text"  
-      class="form-control" 
-      maxlength="200" 
-      placeholder="max 200 charactères" 
-      formControlName="diplomaName"
-      (blur)="markFieldAsTouched('schoolName')">
-      <mat-error *ngIf="formationCreationForm.get('diplomaName')?.touched && formationCreationForm.get('diplomaName')?.invalid">{{ getErrorMessage('diplomaName') }}</mat-error>
-  </mat-form-field>
-  <mat-form-field class="custom-mat-form-field">
-    <label for="city" class="fs-5 form-label">
-      Ville<span class="text-danger">*</span>
-    </label>
-    <input matInput
-      type="text" 
-      class="form-control" 
-      maxlength="50" 
-      formControlName="city"
-      (blur)="markFieldAsTouched('schoolName')">
-      <mat-error *ngIf="formationCreationForm.get('city')?.touched && formationCreationForm.get('city')?.invalid">{{ getErrorMessage('city') }}</mat-error>
-  </mat-form-field>
+<div class="container">
+  <form class="d-flex flex-column mx-3" [formGroup]="formationCreationForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="custom-mat-form-field">
+      <label for="schoolName" class="fs-5">
+        Nom de l'établissement<span class="text-danger">*</span>
+      </label>
+      <input matInput type="text" id="nomEcole" maxlength="200" placeholder="max 200 charactères"
+        formControlName="schoolName" (blur)="markFieldAsTouched('schoolName')">
+      <mat-error
+        *ngIf="formationCreationForm.get('schoolName')?.touched && formationCreationForm.get('schoolName')?.invalid">{{
+        getErrorMessage('schoolName') }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="custom-mat-form-field">
+      <label for="formationName" class="fs-5">
+        Nom de la formation<span class="text-danger">*</span>
+      </label>
+      <input matInput type="text" maxlength="200" placeholder="max 200 charactères" formControlName="formationName"
+        (blur)="markFieldAsTouched('schoolName')">
+      <mat-error
+        *ngIf="formationCreationForm.get('formationName')?.touched && formationCreationForm.get('formationName')?.invalid">{{
+        getErrorMessage('formationName') }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="custom-mat-form-field">
+      <label for="diplomaName" class="fs-5">
+        Nom du diplôme<span class="text-danger">*</span>
+      </label>
+      <input matInput type="text" maxlength="200" placeholder="max 200 charactères" formControlName="diplomaName"
+        (blur)="markFieldAsTouched('schoolName')">
+      <mat-error
+        *ngIf="formationCreationForm.get('diplomaName')?.touched && formationCreationForm.get('diplomaName')?.invalid">{{
+        getErrorMessage('diplomaName') }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="custom-mat-form-field">
+      <label for="city" class="fs-5">
+        Ville<span class="text-danger">*</span>
+      </label>
+      <input matInput type="text" maxlength="50" formControlName="city" (blur)="markFieldAsTouched('schoolName')">
+      <mat-error *ngIf="formationCreationForm.get('city')?.touched && formationCreationForm.get('city')?.invalid">{{
+        getErrorMessage('city') }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="custom-mat-form-field">
+      <label for="description" class="fs-5">
+        Description de votre formation
+      </label>
+      <textarea matInput id="description" maxlength="1000" placeholder="max 1000 charactères"
+        formControlName="description" (blur)="markFieldAsTouched('description')"></textarea>
+      <mat-error
+        *ngIf="formationCreationForm.get('description')?.touched && formationCreationForm.get('description')?.invalid">{{
+        getErrorMessage('description') }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="custom-mat-form-field">
+      <label for="url" class="fs-5">
+        URL de votre formation
+      </label>
+      <input matInput type="text" id="url" maxlength="2083" placeholder="https://www.exemple.com" formControlName="url"
+        (blur)="markFieldAsTouched('url')">
+      <mat-error *ngIf="formationCreationForm.get('url')?.touched && formationCreationForm.get('url')?.invalid">{{
+        getErrorMessage('url') }}</mat-error>
+    </mat-form-field>
 
 
-  <div class="d-flex justify-content-center m-4">
-    <button class="btn btn-primary" [disabled]="formationCreationForm.invalid">Ajouter</button>
-  </div>
-</form>
+    <div class="d-flex justify-content-center m-4">
+      <button class="btn btn-primary" [disabled]="formationCreationForm.invalid">Ajouter</button>
+    </div>
+  </form>
 </div>

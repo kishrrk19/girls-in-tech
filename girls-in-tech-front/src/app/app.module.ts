@@ -9,21 +9,24 @@ import { FormationSchoolDetailComponent } from './formation-school-detail/format
 import { HeaderComponent } from './header/header.component';
 import { FormationSchoolComponent } from './formation-school/formation-school.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import {MatCardModule} from '@angular/material/card';
-import { FormationsListComponent} from './formations-list/formations-list.component';
+import { MatCardModule } from '@angular/material/card';
+import { FormationsListComponent } from './formations-list/formations-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {CreateAccountComponent} from './create-account/create-account.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CreateAccountComponent } from './create-account/create-account.component';
 import { LoginComponent } from './login/login.component';
 import { UpdateFormationSchoolComponent } from './update-formation-school/update-formation-school.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
-import { MatDialogActions, MatDialogContent, MatDialogModule} from '@angular/material/dialog';
+import { MatDialogActions, MatDialogContent, MatDialogModule } from '@angular/material/dialog';
 import { DeleteDialogContentComponent } from './dialogs/delete-dialog-content/delete-dialog-content.component';
 import { FormationDetailComponent } from './formation-detail/formation-detail.component';
 import { MatButtonModule } from '@angular/material/button';
 import { FormationListHomeComponent } from './formation-list-home/formation-list-home.component';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
+import { SearchFormationComponent } from './search-formation/search-formation.component';
+import { MatIconModule } from '@angular/material/icon';
+import { UpdateAndDeleteFormationComponent } from './update-and-delete-formation/update-and-delete-formation.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,9 @@ import { RouterLink } from '@angular/router';
     DeleteDialogComponent,
     DeleteDialogContentComponent,
     FormationDetailComponent,
-    FormationListHomeComponent
+    FormationListHomeComponent,
+    SearchFormationComponent,
+    UpdateAndDeleteFormationComponent
   ],
   imports: [
     BrowserModule,
@@ -48,18 +53,19 @@ import { RouterLink } from '@angular/router';
     HttpClientModule,
     MatCardModule,
     NgbModule,
-    MatFormFieldModule, 
-    MatInputModule, 
+    MatFormFieldModule,
+    MatInputModule,
     FormsModule,
     MatDialogModule,
     MatDialogActions,
     MatDialogContent,
     MatButtonModule,
-    RouterLink
+    RouterLink,
+    MatIconModule
   ],
   providers: [
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

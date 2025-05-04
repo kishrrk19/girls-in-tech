@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { formationData } from '../models/formation-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormationDataService {
-  
+
   private formationsListApiUrl = 'http://localhost:8080/formation/formations'; // バックエンドのAPI URL
 
   private formationByHaveIdApiUrl = 'http://localhost:8080/formation';
@@ -17,7 +18,9 @@ export class FormationDataService {
 
   private formationByFormationId = 'http://localhost:8080/formation'
 
-  constructor(private http: HttpClient) {}
+  private getFormationToUpdateByFormationIdUrl = 'http://localhost:8080/formation/to-update'
+
+  constructor(private http: HttpClient) { }
 
   // IDに基づいてデータを取得するメソッド
   getAllFormations(): Observable<any> {
@@ -31,15 +34,19 @@ export class FormationDataService {
     return this.http.get(`${this.formationsListApiUrl}/${formationId}`);
   }
 
-  getDataByFormationSchoolAssociateId(id: number) : Observable<any>{
+  getDataByFormationSchoolAssociateId(id: number): Observable<any> {
     return this.http.get(`${this.formationByHaveIdApiUrl}/${id}`);
   }
 
-  deleteFormation(haveId : number) : Observable<any> {
-    return this.http.delete(`${this.deleteFormationUrl}/${haveId}`)
+  deleteFormation(formationId: number): Observable<any> {
+    return this.http.delete(`${this.deleteFormationUrl}/${formationId}`)
   }
 
-  getFormationDetailById(formationId : number) :Observable<any>{
-    return this.http.get(`${this.formationByFormationId}/${formationId}`)
+  getFormationDetailById(formationId: number): Observable<formationData> {
+    return this.http.get<formationData>(`${this.formationByFormationId}/${formationId}`)
+  }
+
+  getFormationToUpdateByFormationId(formationId: number): Observable<any> {
+    return this.http.get(`${this.getFormationToUpdateByFormationIdUrl}/${formationId}`)
   }
 }

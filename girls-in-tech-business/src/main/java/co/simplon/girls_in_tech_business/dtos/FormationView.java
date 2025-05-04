@@ -5,5 +5,7 @@ public record FormationView(
 		String formationName,
 		String schoolName,
 		String diplomaName,
-		String city) {
+		String city,
+		String description,
+		String url) {
 }

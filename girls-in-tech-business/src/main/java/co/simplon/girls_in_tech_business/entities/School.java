@@ -3,16 +3,7 @@ package co.simplon.girls_in_tech_business.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name= "t_schools")
@@ -24,7 +15,7 @@ public class School extends AbstractEntity{
 //	@ManyToMany(mappedBy = "schools", cascade = CascadeType.PERSIST)
 //    private Set<Formation> formations = new HashSet<>();
 //	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_id", nullable = false)  // city_idでCityと紐付け
     private City city;
 
