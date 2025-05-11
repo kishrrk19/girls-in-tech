@@ -27,6 +27,7 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { SearchFormationComponent } from './search-formation/search-formation.component';
 import { MatIconModule } from '@angular/material/icon';
 import { UpdateAndDeleteFormationComponent } from './update-and-delete-formation/update-and-delete-formation.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { UpdateAndDeleteFormationComponent } from './update-and-delete-formation
     FormationDetailComponent,
     FormationListHomeComponent,
     SearchFormationComponent,
-    UpdateAndDeleteFormationComponent
+    UpdateAndDeleteFormationComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

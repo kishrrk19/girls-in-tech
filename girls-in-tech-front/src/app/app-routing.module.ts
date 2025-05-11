@@ -10,6 +10,7 @@ import { FormationDetailComponent } from './formation-detail/formation-detail.co
 import { FormationListHomeComponent } from './formation-list-home/formation-list-home.component';
 import { SearchFormationComponent } from './search-formation/search-formation.component';
 import { UpdateAndDeleteFormationComponent } from './update-and-delete-formation/update-and-delete-formation.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: 'create-formation-school', component: CreateFormationSchoolComponent },//OK
@@ -22,8 +23,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'update-delete', component: UpdateAndDeleteFormationComponent },
   { path: 'list', component: FormationListHomeComponent },//? je ne sais pas
-  { path: '', redirectTo: '/list', pathMatch: 'full' }, // 初期ページ
-  { path: '**', redirectTo: '/create-formation-school' } // 不明なURLのリダイレクト
+  { path: '', component: HomeComponent }, // 初期ページ
+  { path: '**', component: HomeComponent } // 不明なURLのリダイレクト
 ];
 
 @NgModule({
