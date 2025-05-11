@@ -8,6 +8,5 @@ import co.simplon.girls_in_tech_business.entities.Role;
 
 public interface RoleJPARepository extends JpaRepository<Role, Long>{
 
-	Set<Role> findByIsDefaultTrue();
 
 }

@@ -24,20 +24,22 @@ public class JwtProvider {
 		this.issuer= issuer;
 	}
 	
-	public String create(String subject, Set<Role> roles) {
+	public String create(String subject, Role role) {
 		Instant issuedAt = Instant.now();
 		
-		ArrayList<String> rolesList = new ArrayList<>();
-		roles.forEach(role -> {
-			String authority = role.getAuthority();
-			rolesList.add(authority);
-		});
+//		ArrayList<String> rolesList = new ArrayList<>();
+//		roles.forEach(role -> {
+//			String authority = role.getAuthority();
+//			rolesList.add(authority);
+//		});
 		
-		String[] rolesArray = rolesList.toArray(new String[0]);
+//		String[] rolesArray = rolesList.toArray(new String[0]);
+
+		String roleUser = role.getAuthority();
 		
 		Builder builder = JWT.create().withIssuedAt(issuedAt).withSubject(subject)
 				.withExpiresAt(OffsetDateTime.now().plusMinutes(expirationMinutes).toInstant())
-				.withIssuer(issuer).withArrayClaim("roles", rolesArray);
+				.withIssuer(issuer).withClaim("role", roleUser);
 				
 		return builder.sign(algorithm);
 	}

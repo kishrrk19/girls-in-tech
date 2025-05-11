@@ -5,13 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "t_accounts")
@@ -23,28 +17,21 @@ public class Account extends AbstractEntity{
 	@Column(name="password")
 	private String password;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-			name = "t_associate",
-			joinColumns = @JoinColumn (name = "associate_account_id"),
-			inverseJoinColumns = @JoinColumn(name = "associate_role_id") //inverseJoinColumnsは、その中間テーブルで「相手のエンティティ（Role）の情報が入るカラム」を指定するためのもの。
-			)
-	private Set<Role> roles ;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name= "role_id")
+	private Role role ;
 
 	public Account() {
 	}
 	
-	public Account(String username, String password, Set<Role> roles) {
+	public Account(String username, String password, Role role) {
 		Objects.requireNonNull(username);
 		Objects.requireNonNull(password);
-		Objects.requireNonNull(roles);
+		Objects.requireNonNull(role);
 		
 		this.username= username;
 		this.password= password;
-		this.roles = new HashSet<>();
-		for (Role role : roles) {
-			addRole(role);
-		}
+		this.role = role;
 	}
 
 	public String getUsername() {
@@ -63,14 +50,14 @@ public class Account extends AbstractEntity{
 		this.password = password;
 	}
 	
-	public Set<Role> getRoles() {
-		return Collections.unmodifiableSet(roles);
-	}
+//	public Set<Role> getRoles() {
+//		return Collections.unmodifiableSet(roles);
+//	}
 
-	public void addRole(Role role) {
-		Objects.requireNonNull(role);
-		roles.add(role);
-	}
+//	public void addRole(Role role) {
+//		Objects.requireNonNull(role);
+//		roles.add(role);
+//	}
 
 	
 	@Override
@@ -95,5 +82,12 @@ public class Account extends AbstractEntity{
 	public String toString() {
 		return "Account [username=" + username + ", password=PROTECTED roles = LAZY_LOADED]";
 	}
-	
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

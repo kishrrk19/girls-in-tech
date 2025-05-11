@@ -9,7 +9,7 @@ INSERT INTO t_diplomas (name) VALUES ('CDA'), ('Ingénieur généraliste'), ('In
 INSERT INTO t_formations (name, school_id, diploma_id) VALUES ('IT school', 1, 1), ('Cycle Ingénieur', 2, 2), ('Ingénieur Civil', 3, 3);
 
 
-INSERT INTO t_roles (authority, default_role) VALUES ('ROLE_ADMIN', true);
+INSERT INTO t_roles (authority) VALUES ('ROLE_ADMIN'), ('ROLE_ELEVE'), ('ROLE_ALUMNI');
 
 SELECT * FROM t_formations tf ;
 SELECT * FROM t_schools ts  ;
