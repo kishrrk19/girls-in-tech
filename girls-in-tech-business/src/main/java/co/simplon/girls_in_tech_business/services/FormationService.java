@@ -6,6 +6,8 @@ import java.util.List;
 
 import co.simplon.girls_in_tech_business.dtos.*;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -126,13 +128,15 @@ public class FormationService {
 		return formations.findFormationDetail(formationId);
 	}
 
-    public List<FormationSearchResult> searchFormation(Specification<Formation> spec) {
-		List<Formation> results = formations.findAll(spec);
-		List<FormationSearchResult> resultsList= new ArrayList<>();
-		for(Formation result : results){
-			resultsList.add(new FormationSearchResult(result));
-		}
-		return resultsList;
+    public FormationTotalResult searchFormation(Specification<Formation> spec, Pageable pageable) {
+		Page<Formation> results = formations.findAll(spec, pageable);
+		Page<FormationSearchResult> resultsList= results.map(FormationSearchResult::new);
+		List<FormationSearchResult> data = resultsList.getContent();
+		Long totalElements = results.getTotalElements();
+		int currentPage = results.getNumber();
+		int pageSize = results.getSize();
+
+		return new FormationTotalResult(data, totalElements, currentPage, pageSize);
     }
 
 	public FormationToUpdate getFormationInfoToUpdate(Long formationId) {

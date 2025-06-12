@@ -11,60 +11,49 @@ import { Router } from '@angular/router';
 export class SearchFormationComponent implements OnInit {
 
   formationRechercheForm!: FormGroup;
-  constructor(private fb: FormBuilder,private http: HttpClient, private router:Router){}
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
-    this.formationRechercheForm= this.fb.group({
-          schoolName : ['', Validators.maxLength(200)],
-          formationName : ['', Validators.maxLength(200)],
-          diplomaName : ['', Validators.maxLength(200)],
-          city : ['', Validators.maxLength(50)]
-        });
-    
+    this.formationRechercheForm = this.fb.group({
+      schoolName: ['', Validators.maxLength(200)],
+      formationName: ['', Validators.maxLength(200)],
+      diplomaName: ['', Validators.maxLength(200)],
+      city: ['', Validators.maxLength(50)]
+    });
+
   }
 
-  onSubmit(){
-    if(this.formationRechercheForm.valid){
+  onSubmit() {
+    if (this.formationRechercheForm.valid) {
       const formData = this.formationRechercheForm.value;
 
-      this.router.navigate(['/formations-list'], {queryParams: formData})
-    //   this.http.post('http://localhost:8080/formation/search', formData).subscribe({
-    //     next: (response)=> {
-    //       console.log('Response reçu', response);
-    //       this.router.navigate(['/formations-list'], {queryParams: {data : JSON.stringify(response), query : formData}})
-    //     } ,
-    //     error : (error) => {
-    //       console.error('Erreur d envoie', error);
-    //     }
-    //   })
-    // }else{
-    //   //TODO : when search criteria is not ok
+      this.router.navigate(['/formations-list'], { queryParams: formData })
     }
 
   }
 
-  getErrorMessage(controlName : string) : string{
+  hasAnyValue(): boolean {
+    const values = this.formationRechercheForm.value;
+    return Object.values(values).some(val => !!val && val.toString().trim() !== '');
+  }
+
+  getErrorMessage(controlName: string): string {
     const control = this.formationRechercheForm.get(controlName);
-    if(control?.hasError('maxlength')){
+    if (control?.hasError('maxlength')) {
       const maxlength = control.getError('maxlength').requiredLength;
       return `Maximum ${maxlength}`;
     }
     return '';
   }
 
-  markFieldAsTouched(controlName : string): void{
+  markFieldAsTouched(controlName: string): void {
     console.log("appeled");
     const control = this.formationRechercheForm.get(controlName);
-    if(control){
+    if (control) {
       console.log("appel")
       control.markAsTouched();
       control.updateValueAndValidity();
     }
   }
-  // onSchoolClick(school : any){
-  //   this.router.navigate([
-  //     //to navigate to detail page
-  //   ])
-  // }
 
 }

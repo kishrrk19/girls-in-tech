@@ -28,6 +28,8 @@ import { SearchFormationComponent } from './search-formation/search-formation.co
 import { MatIconModule } from '@angular/material/icon';
 import { UpdateAndDeleteFormationComponent } from './update-and-delete-formation/update-and-delete-formation.component';
 import { HomeComponent } from './home/home.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { HomeComponent } from './home/home.component';
     MatDialogContent,
     MatButtonModule,
     RouterLink,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ],
   providers: [
     provideAnimationsAsync()

@@ -27,3 +27,25 @@ img {
     object-fit: contain;
     align-self: flex-end;
 }
+
+.search {
+    width: auto;
+}
+
+@media(max-width : 768px) {
+    .mobile-hide {
+        display: none;
+    }
+
+    app-search-formation {
+        width: 100%;
+    }
+
+    .upside-background {
+        height: 25vh;
+    }
+
+    .flex {
+        height: 25vh;
+    }
+}
