@@ -33,13 +33,13 @@ CREATE TABLE t_spots(
 
 
 DROP TABLE IF EXISTS t_cities CASCADE;
-DROP TABLE IF EXISTS t_graduate CASCADE;
+--DROP TABLE IF EXISTS t_graduate CASCADE;
 DROP TABLE IF EXISTS t_diplomas CASCADE;
 DROP TABLE IF EXISTS t_schools CASCADE;
 DROP TABLE IF EXISTS t_formations CASCADE;
-DROP TABLE IF EXISTS t_alumnis CASCADE;
+--DROP TABLE IF EXISTS t_alumnis CASCADE;
 DROP TABLE IF EXISTS t_roles CASCADE;
-DROP TABLE IF EXISTS t_associate;
+--DROP TABLE IF EXISTS t_associate;
 DROP TABLE IF EXISTS t_accounts;
 
 
@@ -76,7 +76,8 @@ CREATE TABLE t_formations(
    url VARCHAR(2083) unique,
    CONSTRAINT t_formations_schools_fkey FOREIGN KEY(school_id) REFERENCES t_schools(id),
    CONSTRAINT t_formations_diplomas_fkey FOREIGN KEY(diploma_id) REFERENCES t_diplomas(id),
-   CONSTRAINT t_formations_pkey PRIMARY KEY(id, school_id),
+   --CONSTRAINT t_formations_pkey PRIMARY KEY(id, school_id),
+   CONSTRAINT t_formations_pkey PRIMARY KEY(id),
    CONSTRAINT t_formation_ukey UNIQUE (name, school_id, diploma_id)
 );
 
@@ -84,12 +85,12 @@ CREATE TABLE t_formations(
 
 
 
-CREATE TABLE t_alumnis(
-   id_alumni INT GENERATED ALWAYS AS IDENTITY,
-   alumni_name VARCHAR(50) NOT NULL,
-   CONSTRAINT t_alumnis_pkey PRIMARY KEY(id_alumni),
-   CONSTRAINT t_alumnis_ukey UNIQUE (alumni_name)
-);
+--CREATE TABLE t_alumnis(
+--   id_alumni INT GENERATED ALWAYS AS IDENTITY,
+--   alumni_name VARCHAR(50) NOT NULL,
+--   CONSTRAINT t_alumnis_pkey PRIMARY KEY(id_alumni),
+--   CONSTRAINT t_alumnis_ukey UNIQUE (alumni_name)
+--);
 
 --CREATE TABLE t_have(
 --   id_have INT GENERATED ALWAYS AS IDENTITY,
@@ -101,6 +102,7 @@ CREATE TABLE t_alumnis(
 --   CONSTRAINT t_have_formations_fkey FOREIGN KEY(have_formation_id) REFERENCES t_formations(id_formation)
 --);
 
+/*
 CREATE TABLE t_graduate(
    graduate_formation_school_id INT,
    graduate_alumni_id INT,
@@ -108,6 +110,8 @@ CREATE TABLE t_graduate(
    CONSTRAINT t_graduate_alumnis_fkey FOREIGN KEY(graduate_alumni_id) REFERENCES t_alumnis(id_alumni),
    CONSTRAINT t_graduate_have_fkey FOREIGN KEY(graduate_formation_school_id) REFERENCES t_have(id_have)
 );
+*/
+
 
 CREATE TABLE t_roles(
 	id INT GENERATED ALWAYS AS IDENTITY,
@@ -124,6 +128,31 @@ CREATE TABLE t_accounts(
 	CONSTRAINT t_accounts_pkey PRIMARY KEY (id),
 	CONSTRAINT t_accounts_ukey UNIQUE (username),
 	CONSTRAINT t_accounts_roles_fkey FOREIGN KEY(role_id) REFERENCES t_roles(id)
+);
+
+CREATE TABLE t_questions(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	account_id INT NOT NULL,
+	formation_id INT NOT NULL,
+	title varchar(255) NOT NULL,
+	created_at TIMESTAMP NOT NULL,
+	content varchar(2000),
+	CONSTRAINT t_questions_pkey PRIMARY KEY(id),
+	CONSTRAINT t_questions_accounts_fkey FOREIGN KEY(account_id) REFERENCES t_accounts(id),
+	CONSTRAINT t_questions_formations_fkey FOREIGN KEY(formation_id) REFERENCES t_formations(id),
+	CONSTRAINT t_questions_ukey UNIQUE (account_id, formation_id, title, created_at)
+	);
+
+CREATE TABLE t_answers(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	question_id INT NOT NULL,
+	answered_account_id INT NOT NULL,
+	content varchar (2000),
+	created_at TIMESTAMP NOT NULL,
+	CONSTRAINT t_answers_pkey PRIMARY KEY (id),
+	CONSTRAINT t_answers_questions_fkey FOREIGN KEY (question_id) REFERENCES t_questions(id),
+	CONSTRAINT t_answers_accounts_fkey FOREIGN KEY (answered_account_id) REFERENCES t_accounts(id),
+	CONSTRAINT t_answers_ukey UNIQUE (question_id, answered_account_id, created_at)
 );
 
 
