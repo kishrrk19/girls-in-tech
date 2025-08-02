@@ -46,7 +46,7 @@ public class WebConfig {
 //	@Bean
 //	public WebMvcConfigurer corsConfigurer() {
 //		return new WebMvcConfigurer() {
-//		
+//
 //		@Override
 //		public void addCorsMappings(CorsRegistry registry) {
 //			registry.addMapping("/**")
@@ -101,10 +101,10 @@ public class WebConfig {
 //
 //	}
 
-	@Profile("prod")
+//	@Profile("prod")
 	@Bean
 	SecurityFilterChain prodFilterChain(HttpSecurity http) throws Exception{
-		return http.cors(cors -> cors.disable()) .csrf((csrf)-> csrf.disable())
+		return http.cors(cors -> cors.disable()).csrf((csrf)-> csrf.disable())
 				.authorizeHttpRequests((req)-> req
 						.requestMatchers(HttpMethod.POST,"/account/creer-compte", "/account/login").anonymous()
 						.requestMatchers(HttpMethod.POST, "/formation/create").permitAll()
