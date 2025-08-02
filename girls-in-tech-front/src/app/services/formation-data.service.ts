@@ -2,23 +2,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { formationData } from '../models/formation-data';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormationDataService {
 
-  private formationsListApiUrl = 'http://localhost:8080/formation/formations'; // バックエンドのAPI URL
+  private baseUrl = environment.gatewayUrl;
 
-  private formationByHaveIdApiUrl = 'http://localhost:8080/formation';
+  private formationsListApiUrl = `${this.baseUrl}/formation/formations`; // バックエンドのAPI URL
 
-  private deleteFormationUrl = 'http://localhost:8080/formation/delete';
+  private formationByHaveIdApiUrl = `${this.baseUrl}/formation`;
 
-  private allFormationList = 'http://localhost:8080/formation/list';
+  private deleteFormationUrl = `${this.baseUrl}/formation/delete`;
 
-  private formationByFormationId = 'http://localhost:8080/formation'
+  private allFormationList = `${this.baseUrl}/formation/list`;
 
-  private getFormationToUpdateByFormationIdUrl = 'http://localhost:8080/formation/to-update'
+  private formationByFormationId = `${this.baseUrl}/formation`;
+
+  private getFormationToUpdateByFormationIdUrl = `${this.baseUrl}/formation/to-update`;
 
   constructor(private http: HttpClient) { }
 
