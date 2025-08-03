@@ -39,8 +39,8 @@ public class WebConfig {
 	@Value("${co.simplon.girls_in_tech.issuer}")
 	private String issuer;
 
-	@Value("${co.simplon.girls_in_tech.cors}")
-	private String origins;
+//	@Value("${co.simplon.girls_in_tech.cors}")
+//	private String origins;
 
 //	@Profile("!prod")
 //	@Bean
