@@ -83,25 +83,25 @@ public class WebConfig {
 		
 	}
 
-//	@Profile("!prod")
-//	@Bean
-//	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-//		return http.cors(Customizer.withDefaults()).csrf((csrf)-> csrf.disable())
-//				.authorizeHttpRequests((req)-> req
-//						.requestMatchers(HttpMethod.POST,"/account/creer-compte", "/account/login").anonymous()
-//						.requestMatchers(HttpMethod.POST, "/formation/create").permitAll()
-//						.requestMatchers(HttpMethod.POST, "/formation/search").permitAll()
-//						.requestMatchers(HttpMethod.PUT, "/formation/update/*").permitAll()
-//						.requestMatchers(HttpMethod.DELETE, "/formation/delete/*").permitAll()
-//	                    .requestMatchers(HttpMethod.GET,  "/formation/*", "/formation/formations/*", "/formation/to-update/*").permitAll()
-//						.anyRequest().authenticated()// 他は全部認証が必要
-//						)
-//				.oauth2ResourceServer((srv)-> srv.jwt(Customizer.withDefaults()))
-//				.build();
-//
-//	}
+	@Profile("!prod")
+	@Bean
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+		return http.cors(Customizer.withDefaults()).csrf((csrf)-> csrf.disable())
+				.authorizeHttpRequests((req)-> req
+						.requestMatchers(HttpMethod.POST,"/account/creer-compte", "/account/login").anonymous()
+						.requestMatchers(HttpMethod.POST, "/formation/create").permitAll()
+						.requestMatchers(HttpMethod.POST, "/formation/search").permitAll()
+						.requestMatchers(HttpMethod.PUT, "/formation/update/*").permitAll()
+						.requestMatchers(HttpMethod.DELETE, "/formation/delete/*").permitAll()
+	                    .requestMatchers(HttpMethod.GET,  "/formation/*", "/formation/formations/*", "/formation/to-update/*").permitAll()
+						.anyRequest().authenticated()// 他は全部認証が必要
+						)
+				.oauth2ResourceServer((srv)-> srv.jwt(Customizer.withDefaults()))
+				.build();
 
-//	@Profile("prod")
+	}
+
+	@Profile("prod")
 	@Bean
 	SecurityFilterChain prodFilterChain(HttpSecurity http) throws Exception{
 		return http.cors(Customizer.withDefaults()).csrf((csrf)-> csrf.disable())
