@@ -11,10 +11,10 @@
 
 INSERT INTO t_roles (authority) VALUES ('ROLE_ADMIN'), ('ROLE_ELEVE'), ('ROLE_ALUMNI');
 --
---SELECT * FROM t_formations tf ;
---SELECT * FROM t_schools ts  ;
---SELECT * FROM t_cities tc ;
---SELECT * FROM t_diplomas; 
+/*SELECT * FROM t_formations tf ;
+SELECT * FROM t_schools ts  ;
+SELECT * FROM t_cities tc ;
+SELECT * FROM t_diplomas; */
 --SELECT * FROM t_accounts ta ;
 --SELECT * FROM t_roles;
 --SELECT * FROM t_associate;
