@@ -106,7 +106,7 @@ public class WebConfig {
 	SecurityFilterChain prodFilterChain(HttpSecurity http) throws Exception{
 		return http.cors(Customizer.withDefaults()).csrf((csrf)-> csrf.disable())
 				.authorizeHttpRequests((req)-> req
-						.requestMatchers(HttpMethod.POST,"/create-account", "/account/login").anonymous()
+						.requestMatchers(HttpMethod.POST,"/account/create-account", "/account/login").permitAll()
 						.requestMatchers(HttpMethod.POST, "/formation/create").permitAll()
 						.requestMatchers(HttpMethod.POST, "/formation/search").permitAll()
 						.requestMatchers(HttpMethod.PUT, "/formation/update/*").permitAll()
