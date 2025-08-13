@@ -43,7 +43,7 @@ public class WebConfig {
 	private String origins;
 
 	@Bean
-	@Profile("!prod")
+	@Profile("dev")
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 
@@ -85,7 +85,7 @@ public class WebConfig {
 
 
 	@Bean
-	@Profile("!prod")
+	@Profile("dev")
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		return http.cors(Customizer.withDefaults()).csrf((csrf)-> csrf.disable())
 				.authorizeHttpRequests((req)-> req
