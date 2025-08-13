@@ -1,0 +1,2 @@
+json
+{"schoolName": "", "formationName": "", "diplomaName": "", "city": "CONSTRAINT t_schools_city_fkey FOREIGN KEY(city_id) REFERENCES t_cities(id)"}

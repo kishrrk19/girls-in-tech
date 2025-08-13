@@ -39,22 +39,22 @@ public class WebConfig {
 	@Value("${co.simplon.girls_in_tech.issuer}")
 	private String issuer;
 
-//	@Value("${co.simplon.girls_in_tech.cors}")
-//	private String origins;
-//
-//	@Profile("!prod")
-//	@Bean
-//	public WebMvcConfigurer corsConfigurer() {
-//		return new WebMvcConfigurer() {
-//
-//		@Override
-//		public void addCorsMappings(CorsRegistry registry) {
-//			registry.addMapping("/**")
-//			.allowedMethods("POST", "GET", "PATCH", "PUT", "DELETE")
-//			.allowedOrigins(origins);
-//		}
-//	};
-//	}
+	@Value("${co.simplon.girls_in_tech.cors}")
+	private String origins;
+
+	@Bean
+	@Profile("!prod")
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+
+		@Override
+		public void addCorsMappings(CorsRegistry registry) {
+			registry.addMapping("/**")
+			.allowedMethods("POST", "GET", "PATCH", "PUT", "DELETE")
+			.allowedOrigins(origins);
+		}
+	};
+	}
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
@@ -83,8 +83,9 @@ public class WebConfig {
 		
 	}
 
-	@Profile("!prod")
+
 	@Bean
+	@Profile("!prod")
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		return http.cors(Customizer.withDefaults()).csrf((csrf)-> csrf.disable())
 				.authorizeHttpRequests((req)-> req
@@ -101,8 +102,9 @@ public class WebConfig {
 
 	}
 
-	@Profile("prod")
+
 	@Bean
+	@Profile("prod")
 	SecurityFilterChain prodFilterChain(HttpSecurity http) throws Exception{
 		return http.cors(Customizer.withDefaults()).csrf((csrf)-> csrf.disable())
 				.authorizeHttpRequests((req)-> req

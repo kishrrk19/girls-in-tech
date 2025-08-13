@@ -49,13 +49,7 @@ public class FormationController {
 	public FormationTotalResult searchFormations(@Valid @RequestBody FormationSearch formationSearch,
 														@RequestParam(defaultValue = "0") int page,
 														@RequestParam(defaultValue = "10") int size){
-		Specification<Formation> spec = Specification
-				.where(FormationSpecification.formationNameContains(formationSearch.formationName()))
-				.and(FormationSpecification.schoolNameContains(formationSearch.schoolName()))
-				.and(FormationSpecification.diplomaNameContains(formationSearch.diplomaName()))
-				.and(FormationSpecification.cityNameContains(formationSearch.city()));
-		Pageable pageable = PageRequest.of(page, size);
-		FormationTotalResult resultPage = service.searchFormation(spec, pageable);
+		FormationTotalResult resultPage = service.searchFormation(formationSearch, page, size);
 		return resultPage;
 	}
 
