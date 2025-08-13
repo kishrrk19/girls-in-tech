@@ -104,7 +104,7 @@ public class WebConfig {
 
 
 	@Bean
-	@Profile("prod")
+	@Profile("!dev")
 	SecurityFilterChain prodFilterChain(HttpSecurity http) throws Exception{
 		return http.cors(Customizer.withDefaults()).csrf((csrf)-> csrf.disable())
 				.authorizeHttpRequests((req)-> req
