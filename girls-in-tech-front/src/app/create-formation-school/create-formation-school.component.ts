@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-create-formation-school',
@@ -9,6 +10,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 })
 export class CreateFormationSchoolComponent implements OnInit {
   formationCreationForm!: FormGroup;
+  private baseUrl = environment.gatewayUrl;
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
 
@@ -27,7 +29,7 @@ export class CreateFormationSchoolComponent implements OnInit {
     if (this.formationCreationForm.valid) {
       const formData = this.formationCreationForm.value;
 
-      this.http.post('http://localhost:8080/formation/create', formData, { observe: 'response' }).subscribe(
+      this.http.post(`${this.baseUrl}/formation/create`, formData, { observe: 'response' }).subscribe(
         response => {
           if (response.status === 201) {
             alert("Votre formation est bien enregistrée!");

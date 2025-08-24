@@ -4,6 +4,7 @@ import { FormationDataService } from '../services/formation-data.service';
 import { formationData } from '../models/formation-data';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-formations-list',
@@ -23,6 +24,8 @@ export class FormationsListComponent implements OnInit {
   queryKeys: any[] = [];
   noResult = false;
   spin = true;
+
+  private baseUrl = environment.gatewayUrl;
 
   constructor(private route: ActivatedRoute, private formationDataService: FormationDataService, private http: HttpClient, private router: Router) {
   }
@@ -44,7 +47,7 @@ export class FormationsListComponent implements OnInit {
       .set('page', this.pageIndex.toString())
       .set('size', this.pageSize.toString())
 
-    this.http.post<FormationResponse>('http://localhost:8080/formation/search', this.keys, { params }).subscribe({
+    this.http.post<FormationResponse>(`${this.baseUrl}/formation/search`, this.keys, { params }).subscribe({
       next: (response) => {
         console.log('Response reçu', response);
         const result = response.data;

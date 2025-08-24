@@ -5,8 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 
 import co.simplon.girls_in_tech_business.dtos.*;
+import co.simplon.girls_in_tech_business.repositories.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,6 @@ import co.simplon.girls_in_tech_business.entities.City;
 import co.simplon.girls_in_tech_business.entities.Diploma;
 import co.simplon.girls_in_tech_business.entities.Formation;
 import co.simplon.girls_in_tech_business.entities.School;
-import co.simplon.girls_in_tech_business.repositories.CityJPARepository;
-import co.simplon.girls_in_tech_business.repositories.DiplomaJPARepository;
-import co.simplon.girls_in_tech_business.repositories.FormationJPARepository;
-import co.simplon.girls_in_tech_business.repositories.SchoolJPARepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -128,7 +126,13 @@ public class FormationService {
 		return formations.findFormationDetail(formationId);
 	}
 
-    public FormationTotalResult searchFormation(Specification<Formation> spec, Pageable pageable) {
+    public FormationTotalResult searchFormation(FormationSearch formationSearch, int page, int size) {
+		Specification<Formation> spec = Specification
+				.where(FormationSpecification.formationNameContains(formationSearch.formationName()))
+				.and(FormationSpecification.schoolNameContains(formationSearch.schoolName()))
+				.and(FormationSpecification.diplomaNameContains(formationSearch.diplomaName()))
+				.and(FormationSpecification.cityNameContains(formationSearch.city()));
+		Pageable pageable = PageRequest.of(page, size);
 		Page<Formation> results = formations.findAll(spec, pageable);
 		Page<FormationSearchResult> resultsList= results.map(FormationSearchResult::new);
 		List<FormationSearchResult> data = resultsList.getContent();
