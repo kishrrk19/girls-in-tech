@@ -130,7 +130,7 @@ CREATE TABLE t_accounts(
 	CONSTRAINT t_accounts_roles_fkey FOREIGN KEY(role_id) REFERENCES t_roles(id)
 );
 
-/*CREATE TABLE t_questions(
+CREATE TABLE t_questions(
 	id INT GENERATED ALWAYS AS IDENTITY,
 	account_id INT NOT NULL,
 	formation_id INT NOT NULL,
@@ -140,8 +140,8 @@ CREATE TABLE t_accounts(
 	CONSTRAINT t_questions_pkey PRIMARY KEY(id),
 	CONSTRAINT t_questions_accounts_fkey FOREIGN KEY(account_id) REFERENCES t_accounts(id),
 	CONSTRAINT t_questions_formations_fkey FOREIGN KEY(formation_id) REFERENCES t_formations(id),
-	CONSTRAINT t_questions_ukey UNIQUE (account_id, formation_id, title, created_at)
-	);*/
+	CONSTRAINT t_questions_ukey UNIQUE (account_id, formation_id, title)
+	);
 
 /*CREATE TABLE t_answers(
 	id INT GENERATED ALWAYS AS IDENTITY,

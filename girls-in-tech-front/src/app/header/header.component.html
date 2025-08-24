@@ -25,14 +25,24 @@
 
       <div [ngbCollapse]="isNavbarCollapsed"
         class="collapse navbar-collapse justify-content-center justify-content-lg-end">
-        <ul class="navbar-nav text-center text-lg-end ms-lg-auto">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/login">Se connecter</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/create-account">Créer un compte</a>
-          </li>
-        </ul>
+
+        <ng-container *ngIf="!(authService.isLoggedIn$ |async); else loggedIn">
+          <ul class="navbar-nav text-center text-lg-end ms-lg-auto">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/login">Se connecter</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/create-account">Créer un compte</a>
+            </li>
+          </ul>
+        </ng-container>
+
+        <ng-template #loggedIn>
+          <div class="navbar-nav text-center text-lg-end ms-lg-auto">
+            <a class="nav-link" role="button" (click)="logout()">Se déconnecter</a>
+          </div>
+        </ng-template>
+
       </div>
     </div>
   </nav>

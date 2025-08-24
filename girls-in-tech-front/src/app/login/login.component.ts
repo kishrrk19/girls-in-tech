@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../environments/environment';
+import { AuthInfo } from '../core/models/authinfo';
+import { Router } from '@angular/router';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   private baseUrl = environment.gatewayUrl;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private authService: AuthService) {
 
   }
   ngOnInit(): void {
@@ -33,9 +36,14 @@ export class LoginComponent implements OnInit {
       const formData = this.loginForm.value;
       console.log(formData);
 
-      this.http.post(`${this.baseUrl}/account/login`, formData).subscribe({
+      this.http.post<AuthInfo>(`${this.baseUrl}/account/login`, formData).subscribe({
         next: (response) => {
           console.log('La demande est encoyé', response);
+
+          this.authService.setSession(response);
+
+          this.router.navigateByUrl('');
+
         },
         error: (error) => {
           console.error('Erreur d envoie', error);

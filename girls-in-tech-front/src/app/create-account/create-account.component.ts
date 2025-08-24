@@ -4,6 +4,7 @@ import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-account',
@@ -16,7 +17,7 @@ export class CreateAccountComponent implements OnInit {
   errorMessage = '';
   private baseUrl = environment.gatewayUrl;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -27,7 +28,10 @@ export class CreateAccountComponent implements OnInit {
         Validators.minLength(4),
         Validators.maxLength(20),
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,20}$'),
-      ]]
+      ]],
+      firstName: ['', [Validators.required, Validators.maxLength(60)]],
+      lastName: ['', [Validators.required, Validators.maxLength(100)]],
+      roleId: [null, [Validators.required]]
     })
 
     const emailControl = this.accountCreationForm.get('username');
@@ -61,6 +65,7 @@ export class CreateAccountComponent implements OnInit {
       this.http.post(`${this.baseUrl}/account/creer-compte`, formData).subscribe({
         next: (response) => {
           console.log('La demande est encoyé', response);
+          this.router.navigateByUrl('/login')
         },
         error: (error) => {
           console.error('Erreur d envoie', error);

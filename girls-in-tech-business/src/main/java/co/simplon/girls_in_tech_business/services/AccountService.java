@@ -40,13 +40,19 @@ public class AccountService {
 	@Transactional
 	public void create(AccountCreate inputs) {
 
-		Role role = roles.findByAuthority("ROLE_ELEVE");
+		Role role = roles.findById(inputs.roleId())
+				.orElseThrow(()-> new IllegalArgumentException("No role associated"));
 		
 		String username = inputs.username();
 		
 		String passencode = encoder.encode(inputs.password());
 		
-		Account account = new Account(username, passencode, role);
+		Account account = new Account();
+		account.setUsername(username);
+		account.setPassword(passencode);
+		account.setRole(role);
+		account.setFirstName(inputs.firstName());
+		account.setLastName(inputs.lastName());
 		
 		accounts.save(account);
 		
@@ -71,13 +77,16 @@ public class AccountService {
 		if(compared) {
 			String tokenJWT = jwtProvider.create(inputsUsername, entity.getRole());
 			
-			AuthInfo info = new AuthInfo(tokenJWT, entity.getRole().getAuthority());
+			AuthInfo info = new AuthInfo(tokenJWT, entity.getFirstName(), entity.getLastName(), entity.getRole().getAuthority());
 			return info;
 		}else {
 			throw new BadCredentialsException(inputsUsername);
 		}
 		
 	}
-	
 
+
+	public boolean emailExist(String email) {
+		return accounts.existsByUsernameIgnoreCase(email);
+	}
 }

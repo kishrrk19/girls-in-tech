@@ -11,17 +11,19 @@ import { FormationListHomeComponent } from './formation-list-home/formation-list
 import { SearchFormationComponent } from './search-formation/search-formation.component';
 import { UpdateAndDeleteFormationComponent } from './update-and-delete-formation/update-and-delete-formation.component';
 import { HomeComponent } from './home/home.component';
+import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 const routes: Routes = [
-  { path: 'create-formation-school', component: CreateFormationSchoolComponent },//OK
+  { path: 'create-formation-school', canActivate: [adminGuard], component: CreateFormationSchoolComponent },//OK
   { path: 'school-detail', component: FormationSchoolDetailComponent },//OK
   { path: 'formation-detail/:haveId', component: FormationDetailComponent },// will be decomissionned
   { path: 'formations-list', component: FormationsListComponent },//result of search
   { path: 'create-account', component: CreateAccountComponent },
-  { path: 'update-formation-shool', component: UpdateFormationSchoolComponent },//OK
+  { path: 'update-formation-shool', canActivate: [adminGuard], component: UpdateFormationSchoolComponent },//OK
   { path: 'search-formations', component: SearchFormationComponent },//OK
   { path: 'login', component: LoginComponent },
-  { path: 'update-delete', component: UpdateAndDeleteFormationComponent },
+  { path: 'update-delete', canActivate: [adminGuard], component: UpdateAndDeleteFormationComponent },
   { path: 'list', component: FormationListHomeComponent },//? je ne sais pas
   { path: '', component: HomeComponent }, // 初期ページ
   { path: '**', component: HomeComponent } // 不明なURLのリダイレクト

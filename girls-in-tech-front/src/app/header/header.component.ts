@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,4 +10,10 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
   isNavbarCollapsed = true;
 
+  constructor(private router: Router, public authService: AuthService) { }
+
+  logout() {
+    this.authService.clearSession();
+    this.router.navigateByUrl('');
+  }
 }

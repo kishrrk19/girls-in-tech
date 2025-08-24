@@ -1,5 +1,19 @@
 .parent {
     display: flex;
     justify-content: space-evenly;
+    flex-direction: row;
     width: 100%;
+    margin: auto;
+}
+
+@media(max-width : 768px) {
+    .parent {
+        flex-direction: column;
+        width: 75%;
+        align-items: center;
+    }
+
+    .modify {
+        margin-bottom: 1rem;
+    }
 }

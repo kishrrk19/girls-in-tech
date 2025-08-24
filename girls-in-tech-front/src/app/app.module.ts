@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module'; // 追加
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { CreateFormationSchoolComponent } from './create-formation-school/create-formation-school.component';
 import { FormationSchoolDetailComponent } from './formation-school-detail/formation-school-detail.component';
 import { HeaderComponent } from './header/header.component';
@@ -30,6 +30,8 @@ import { UpdateAndDeleteFormationComponent } from './update-and-delete-formation
 import { HomeComponent } from './home/home.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatRadioModule } from '@angular/material/radio';
+import { AuthTokenInterceptor } from './core/interceptors/auth-token.interceptor';
 
 @NgModule({
   declarations: [
@@ -67,10 +69,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     RouterLink,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatRadioModule
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

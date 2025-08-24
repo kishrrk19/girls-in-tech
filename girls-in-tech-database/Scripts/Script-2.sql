@@ -1,57 +1,74 @@
---DELETE FROM t_formations;
---DELETE FROM t_schools;
---DELETE FROM t_diplomas;
---DELETE FROM t_cities;
---
---INSERT INTO t_cities (name) VALUES ('Montreuil'), ('Brest'), ('Nancy');
---INSERT INTO t_schools (name, city_id) VALUES ('Simplon', 1), ('IMT Atlantique', 2), ('Mine Nancy', 3);
---INSERT INTO t_diplomas (name) VALUES ('CDA'), ('Ingénieur généraliste'), ('Ingénieur Civil');
---INSERT INTO t_formations (name, school_id, diploma_id) VALUES ('IT school', 1, 1), ('Cycle Ingénieur', 2, 2), ('Ingénieur Civil', 3, 3);
+--spécific schema pour test
+--CREATE SCHEMA girlsintech_schema_test;
 
-
-INSERT INTO t_roles (authority) VALUES ('ROLE_ADMIN'), ('ROLE_ELEVE'), ('ROLE_ALUMNI');
---
 --SELECT * FROM t_formations tf ;
---SELECT * FROM t_schools ts  ;
---SELECT * FROM t_cities tc ;
---SELECT * FROM t_diplomas; 
---SELECT * FROM t_accounts ta ;
---SELECT * FROM t_roles;
-----SELECT * FROM t_associate;
---SELECT * FROM t_questions;
---SELECT * FROM t_answers;
+SELECT * FROM t_accounts ta ;
 
---SELECT * FROM t_formations tf JOIN t_cities tc WHERE t_cities.name = 'Paris';
---
---DELETE FROM t_formations WHERE id = 3;
---DELETE FROM t_schools WHERE id = 5;
---
---SELECT * FROM t_formations tf JOIN t_diplomas td ON tf.diploma_id=td.id;
---SELECT * FROM t_formations tf JOIN t_schools ts ON tf.school_id =ts.id JOIN t_diplomas td ON tf.diploma_id=td.id;
---
---SELECT f.*
---FROM t_formations f
---JOIN t_schools s ON f.school_id = s.id
---JOIN t_diplomas d ON f.diploma_id = d.id
---JOIN t_cities c ON s.city_id = c.id
---WHERE
---    (:courseName IS NULL OR LOWER(f.name) LIKE LOWER(CONCAT('%', :courseName, '%')))
---    AND (:schoolName IS NULL OR LOWER(s.name) LIKE LOWER(CONCAT('%', :schoolName, '%')))
---    AND (:diplomaName IS NULL OR LOWER(d.name) LIKE LOWER(CONCAT('%', :diplomaName, '%')))
---    AND (:cityName IS NULL OR LOWER(c.name) LIKE LOWER(CONCAT('%', :cityName, '%')));
---
---SELECT f."name", s."name", d."name", c."name"
---FROM t_formations f
---JOIN t_schools s ON f.school_id = s.id
---JOIN t_diplomas d ON f.diploma_id = d.id
---JOIN t_cities c ON s.city_id = c.id
---WHERE LOWER(d.name) LIKE LOWER(CONCAT('%ingénieur%'))
---    AND LOWER(c.name) LIKE LOWER(CONCAT('%Paris%'));
---
---
---SELECT tf."name", ts."name", td."name", tc."name", tf.description, tf.url FROM t_formations tf JOIN t_schools ts ON tf.school_id = ts.id JOIN t_diplomas td ON tf.diploma_id = td.id JOIN t_cities tc ON ts.city_id = tc.id WHERE tf.id = 1;
+DROP TABLE IF EXISTS t_cities CASCADE;
+DROP TABLE IF EXISTS t_diplomas CASCADE;
+DROP TABLE IF EXISTS t_schools CASCADE;
+DROP TABLE IF EXISTS t_formations CASCADE;
+DROP TABLE IF EXISTS t_roles CASCADE;
+DROP TABLE IF EXISTS t_accounts CASCADE;
 
-INSERT INTO t_cities (name) VALUES
+--spécific ddl pour test
+CREATE TABLE girlsintech_schema_test.t_cities(
+   id INT GENERATED ALWAYS AS IDENTITY,
+   name VARCHAR(50) NOT NULL,
+   CONSTRAINT t_cities_pkey PRIMARY KEY(id),
+   CONSTRAINT t_cities_ukey UNIQUE (name)
+);
+
+CREATE TABLE girlsintech_schema_test.t_schools(
+   id INT GENERATED ALWAYS AS IDENTITY,
+   name VARCHAR(200) NOT NULL,
+   city_id INT,
+   CONSTRAINT t_schools_pkey PRIMARY KEY(id),
+   CONSTRAINT t_schools_ukey UNIQUE (name, city_id),
+   CONSTRAINT t_schools_city_fkey FOREIGN KEY(city_id) REFERENCES t_cities(id)  -- 町とのリレーション
+);
+
+CREATE TABLE girlsintech_schema_test.t_diplomas(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	name VARCHAR(200) NOT NULL,
+	CONSTRAINT t_diplomas_pkey PRIMARY KEY(id),
+	CONSTRAINT t_diplomas_ukey UNIQUE (name)
+	);
+
+CREATE TABLE girlsintech_schema_test.t_formations(
+   id INT GENERATED ALWAYS AS IDENTITY,
+   name VARCHAR(200) NOT NULL,
+   school_id INT,
+   diploma_id INT,
+   description VARCHAR(1000),
+   url VARCHAR(2083) unique,
+   CONSTRAINT t_formations_schools_fkey FOREIGN KEY(school_id) REFERENCES t_schools(id),
+   CONSTRAINT t_formations_diplomas_fkey FOREIGN KEY(diploma_id) REFERENCES t_diplomas(id),
+   --CONSTRAINT t_formations_pkey PRIMARY KEY(id, school_id),
+   CONSTRAINT t_formations_pkey PRIMARY KEY(id),
+   CONSTRAINT t_formation_ukey UNIQUE (name, school_id, diploma_id)
+);
+
+CREATE TABLE girlsintech_schema_test.t_roles(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	authority varchar(60),
+	CONSTRAINT t_roles_pkey PRIMARY KEY (id),
+	CONSTRAINT t_roles_ukey UNIQUE (authority)
+	);
+
+CREATE TABLE girlsintech_schema_test.t_accounts(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	username varchar(255),
+	password varchar(60),
+	role_id INT,
+	CONSTRAINT t_accounts_pkey PRIMARY KEY (id),
+	CONSTRAINT t_accounts_ukey UNIQUE (username),
+	CONSTRAINT t_accounts_roles_fkey FOREIGN KEY(role_id) REFERENCES t_roles(id)
+);
+
+--spécific DML pour test
+INSERT INTO girlsintech_schema_test.t_roles (authority) VALUES ('ROLE_ADMIN'), ('ROLE_ELEVE'), ('ROLE_ALUMNI');
+INSERT INTO girlsintech_schema_test.t_cities (name) VALUES
 ('Paris'),
 ('Palaiseau'),
 ('Nancy'),
@@ -63,7 +80,7 @@ INSERT INTO t_cities (name) VALUES
 ('Strasbourg'),
 ('Rennes');
 
-INSERT INTO t_diplomas (name) VALUES
+INSERT INTO girlsintech_schema_test.t_diplomas (name) VALUES
 ('Diplôme d’ingénieur'),
 ('Diplôme d’ingénieur Télécom'),
 ('Cycle ingénieur polytechnicien'),
@@ -76,7 +93,7 @@ INSERT INTO t_diplomas (name) VALUES
 ('Diplôme d’ingénieur en Environnement'),
 ('Licence Électronique');
 
-INSERT INTO t_schools (name, city_id) VALUES
+INSERT INTO girlsintech_schema_test.t_schools (name, city_id) VALUES
 ('École Polytechnique', 2),     -- Palaiseau
 ('Télécom Paris', 1),           -- Paris
 ('Télécom Nancy', 3),           -- Nancy
@@ -90,11 +107,11 @@ INSERT INTO t_schools (name, city_id) VALUES
 ('Université de Strasbourg', 9),-- Strasbourg
 ('ENS Rennes', 10);             -- Rennes
 
-INSERT INTO t_formations (name, school_id, diploma_id, description, url) VALUES
+INSERT INTO girlsintech_schema_test.t_formations (name, school_id, diploma_id, description, url) VALUES
 ('Cycle ingénieur polytechnicien', 1, 3, 'Programme pluridisciplinaire de haut niveau en sciences et ingénierie.', 'https://www.polytechnique.edu/formation1'),
 ('Ingénieur Télécom - Informatique', 2, 2, 'Formation d’ingénieur en télécoms et réseaux avancés.', 'https://www.telecom-paris.fr/formation2'),
 ('Ingénieur Informatique et Réseaux', 3, 1, 'Spécialisation en cybersécurité, réseau et cloud.', 'https://telecomnancy.univ-lorraine.fr/formation3'),
-('Ingénieur Généraliste', 4, 1, 'Formation pluridisciplinaire avec options spécialisées.', 'https://www.imt-atlantique.fr/formation4'),
+('Ingénieur Généraliste1', 4, 1, 'Formation pluridisciplinaire avec options spécialisées.', 'https://www.imt-atlantique.fr/formation4'),
 ('Ingénieur Génie Civil', 5, 4, 'Forme des ingénieurs en construction durable.', 'https://www.insa-toulouse.fr/formation5'),
 ('Ingénieur Énergie', 6, 5, 'Énergies renouvelables, réseaux intelligents, efficacité énergétique.', 'https://www.insa-lyon.fr/formation6'),
 ('Ingénieur Environnement', 7, 10, 'Développement durable, eau, pollution et énergie.', 'https://ense3.grenoble-inp.fr/formation7'),
@@ -141,5 +158,3 @@ INSERT INTO t_formations (name, school_id, diploma_id, description, url) VALUES
 ('Licence Chimie - Paris', 1, 8, 'Bases en chimie et méthodologie expérimentale.', 'https://www.polytechnique.edu/formation48'),
 ('Ingénieur Généraliste - Rennes', 12, 1, 'Approche multidisciplinaire en sciences.', 'https://www.ens-rennes.fr/formation49'),
 ('Licence Électronique - Paris', 2, 11, 'Systèmes et communications embarqués.', 'https://www.telecom-paris.fr/formation50');
-
-
