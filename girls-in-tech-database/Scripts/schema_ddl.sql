@@ -73,10 +73,9 @@ CREATE TABLE t_formations(
    school_id INT,
    diploma_id INT,
    description VARCHAR(1000),
-   url VARCHAR(2083) unique,
+   url VARCHAR(2083),
    CONSTRAINT t_formations_schools_fkey FOREIGN KEY(school_id) REFERENCES t_schools(id),
    CONSTRAINT t_formations_diplomas_fkey FOREIGN KEY(diploma_id) REFERENCES t_diplomas(id),
-   --CONSTRAINT t_formations_pkey PRIMARY KEY(id, school_id),
    CONSTRAINT t_formations_pkey PRIMARY KEY(id),
    CONSTRAINT t_formation_ukey UNIQUE (name, school_id, diploma_id)
 );
@@ -124,6 +123,8 @@ CREATE TABLE t_accounts(
 	id INT GENERATED ALWAYS AS IDENTITY,
 	username varchar(255),
 	password varchar(60),
+	first_name varchar(60),
+	last_name varchar(100),
 	role_id INT,
 	CONSTRAINT t_accounts_pkey PRIMARY KEY (id),
 	CONSTRAINT t_accounts_ukey UNIQUE (username),
@@ -143,7 +144,7 @@ CREATE TABLE t_questions(
 	CONSTRAINT t_questions_ukey UNIQUE (account_id, formation_id, title)
 	);
 
-/*CREATE TABLE t_answers(
+CREATE TABLE t_answers(
 	id INT GENERATED ALWAYS AS IDENTITY,
 	question_id INT NOT NULL,
 	answered_account_id INT NOT NULL,
@@ -153,7 +154,7 @@ CREATE TABLE t_questions(
 	CONSTRAINT t_answers_questions_fkey FOREIGN KEY (question_id) REFERENCES t_questions(id),
 	CONSTRAINT t_answers_accounts_fkey FOREIGN KEY (answered_account_id) REFERENCES t_accounts(id),
 	CONSTRAINT t_answers_ukey UNIQUE (question_id, answered_account_id, created_at)
-);*/
+);
 
 
 --CREATE TABLE t_associate(
