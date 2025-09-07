@@ -30,6 +30,7 @@ import { UpdateAndDeleteFormationComponent } from './update-and-delete-formation
 import { HomeComponent } from './home/home.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     FormationListHomeComponent,
     SearchFormationComponent,
     UpdateAndDeleteFormationComponent,
-    HomeComponent
+    HomeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
