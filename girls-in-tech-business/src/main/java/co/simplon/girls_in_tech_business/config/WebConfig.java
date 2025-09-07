@@ -5,6 +5,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -37,14 +38,17 @@ public class WebConfig {
 	
 	@Value("${co.simplon.girls_in_tech.issuer}")
 	private String issuer;
-	
+
+//	@Value("${co.simplon.girls_in_tech.cors}")
+//	private String origins;
+
 	@Bean
-	public WebMvcConfigurer corsConfigurer() {
+	@Profile("dev")
+	public WebMvcConfigurer corsConfigurer(
+			@Value("${co.simplon.girls_in_tech.cors}") String origins
+	) {
 		return new WebMvcConfigurer() {
-		
-		@Value("${co.simplon.girls_in_tech.cors}")
-		private String origins;
-		
+
 		@Override
 		public void addCorsMappings(CorsRegistry registry) {
 			registry.addMapping("/**")
@@ -80,8 +84,10 @@ public class WebConfig {
 		return decoder;
 		
 	}
-	
+
+
 	@Bean
+	@Profile("dev")
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		return http.cors(Customizer.withDefaults()).csrf((csrf)-> csrf.disable())
 				.authorizeHttpRequests((req)-> req
@@ -95,7 +101,26 @@ public class WebConfig {
 						)
 				.oauth2ResourceServer((srv)-> srv.jwt(Customizer.withDefaults()))
 				.build();
-				
+
+	}
+
+
+	@Bean
+	@Profile("!dev")
+	SecurityFilterChain prodFilterChain(HttpSecurity http) throws Exception{
+		return http.cors(Customizer.withDefaults()).csrf((csrf)-> csrf.disable())
+				.authorizeHttpRequests((req)-> req
+						.requestMatchers(HttpMethod.POST,"/account/creer-compte", "/account/login").anonymous()
+						.requestMatchers(HttpMethod.POST, "/formation/create").permitAll()
+						.requestMatchers(HttpMethod.POST, "/formation/search").permitAll()
+						.requestMatchers(HttpMethod.PUT, "/formation/update/*").permitAll()
+						.requestMatchers(HttpMethod.DELETE, "/formation/delete/*").permitAll()
+						.requestMatchers(HttpMethod.GET,  "/formation/*", "/formation/formations/*", "/formation/to-update/*").permitAll()
+						.anyRequest().authenticated()// 他は全部認証が必要
+				)
+				.oauth2ResourceServer((srv)-> srv.jwt(Customizer.withDefaults()))
+				.build();
+
 	}
 
 }

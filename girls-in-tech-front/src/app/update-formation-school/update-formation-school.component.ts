@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormationDataService } from '../services/formation-data.service';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-update-formation-school',
@@ -13,6 +14,7 @@ export class UpdateFormationSchoolComponent implements OnInit {
 
   formationUpdateForm!: FormGroup;
   formationId!: number;
+  private baseUrl = environment.gatewayUrl;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private formationDataService: FormationDataService, private route: ActivatedRoute) { }
 
@@ -47,13 +49,12 @@ export class UpdateFormationSchoolComponent implements OnInit {
     if (this.formationUpdateForm.valid) {
       const formData = this.formationUpdateForm.value;
       console.log(formData);
-      this.http.put(`http://localhost:8080/formation/update/${this.formationId}`, formData).subscribe({
+      this.http.put(`${this.baseUrl}/formation/update/${this.formationId}`, formData).subscribe({
         next: (response) => console.log('Updated formation', response)
         ,
         error: (error) => console.error('error occured:', error),
         complete: () => console.log('data is updated')
       })
-
     }
   }
 
