@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { environment } from '../../environments/environment';
-import { AuthInfo } from '../core/models/authinfo';
+import { environment } from '../../../../environments/environment';
+import { AuthInfo } from '../../../core/models/authinfo';
 import { Router } from '@angular/router';
-import { AuthService } from '../core/auth.service';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
   selector: 'app-login',

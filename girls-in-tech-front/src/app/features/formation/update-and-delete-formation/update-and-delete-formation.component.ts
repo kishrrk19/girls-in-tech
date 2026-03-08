@@ -3,9 +3,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { DeleteDialogContentComponent } from '../dialogs/delete-dialog-content/delete-dialog-content.component';
-import { FormationDataService } from '../services/formation-data.service';
-import { formationData } from '../models/formation-data';
+import { DeleteDialogContentComponent } from '../../../dialogs/delete-dialog-content/delete-dialog-content.component';
+import { FormationDataService } from '../../../services/formation-data.service';
+import { formationData } from '../../../models/formation-data';
 import { Observable } from 'rxjs';
 
 @Component({

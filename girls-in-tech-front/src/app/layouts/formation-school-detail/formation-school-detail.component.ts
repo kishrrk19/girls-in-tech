@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormationSchool } from '../models/formation_school';
 import { ActivatedRoute } from '@angular/router';
-import { FormationSchoolComponent } from '../formation-school/formation-school.component';
-import { FormationDataService } from '../services/formation-data.service';
-import { formationData } from '../models/formation-data';
+import { FormationDataService } from '../../services/formation-data.service';
+import { formationData } from '../../models/formation-data';
 import { ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -14,25 +12,28 @@ import { Observable } from 'rxjs';
 })
 export class FormationSchoolDetailComponent implements OnInit {
 
-  formationId! : number;
+  formationId!: number;
   formationsListData: formationData | undefined;
-  schoolName: string ='';
-  formationName: string ='';
+  schoolName: string = '';
+  formationName: string = '';
   diplomaName: string = '';
   city: string = '';
   formationsListData$!: Observable<any>;
-  constructor(private route: ActivatedRoute, private formationDataService: FormationDataService, private cdr: ChangeDetectorRef){
+  constructor(private route: ActivatedRoute, private formationDataService: FormationDataService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
     //クエリパラメーターを取得
     //ici faire une nouvelle requête http by id de formation pour récupérer toutes les informations de cette formation y compris description, alumni
     this.route.queryParams.subscribe(params => {
-      const id = params['id'];
-      console.log(id);
-      this.formationDataService.getFormationDetailById(id).subscribe({
-        next: (data) => {this.formationsListData = data;
-          console.log("new implemented",this.formationsListData);
+      this.formationId = params['id'];
+      console.log(this.formationId);
+      this.formationDataService.getFormationDetailById(this.formationId).subscribe({
+        next: (data) => {
+          this.formationsListData = data;
+          console.log("new implemented", this.formationsListData);
+          this.schoolName = this.formationsListData.schoolName;
+          this.formationName = this.formationsListData.formationName;
           //this.cdr.detectChanges();
         },
         error: (error) => console.error('error occured:', error),
@@ -41,7 +42,7 @@ export class FormationSchoolDetailComponent implements OnInit {
     }
     );
 
-    
+
 
   }
 }

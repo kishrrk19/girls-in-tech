@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormationDataService } from '../services/formation-data.service';
+import { FormationDataService } from '../../../services/formation-data.service';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-update-formation-school',
