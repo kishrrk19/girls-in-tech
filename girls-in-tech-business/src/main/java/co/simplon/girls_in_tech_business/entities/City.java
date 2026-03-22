@@ -13,28 +13,15 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name= "t_cities")
-public class City {
+public class City extends AbstractEntity{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_city")
-	private Long id;
-	
-	@Column(name="city")
+	@Column(name="name")
 	String name;
 	
 	@OneToMany(mappedBy = "city")
     private Set<School> schools = new HashSet<>();
 
 	public City() {
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -55,7 +42,7 @@ public class City {
 
 	@Override
 	public String toString() {
-		return "City [id=" + id + ", name=" + name + ", schools=" + schools + "]";
+		return "City [name=" + name + ", schools=" + schools + "]";
 	}
 
 }

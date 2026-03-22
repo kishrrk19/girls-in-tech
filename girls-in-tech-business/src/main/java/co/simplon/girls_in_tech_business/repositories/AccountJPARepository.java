@@ -1,5 +1,6 @@
 package co.simplon.girls_in_tech_business.repositories;
 
+
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +13,7 @@ public interface AccountJPARepository extends JpaRepository<Account,Long>{
 
 	Optional<Account> findByUsernameIgnoreCase(String inputsUsername);
 
-	
+	boolean existsByUsernameIgnoreCase(String email);
+
+	Optional<Account> findByUsername(String email);
 }

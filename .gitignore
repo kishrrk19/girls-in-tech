@@ -1,4 +1,5 @@
 application-dev.properties
+application-test.properties
 **/.settings
 **/.project
 

@@ -31,67 +31,77 @@ CREATE TABLE t_spots(
 );
 */
 
-SELECT * FROM t_formations tf ;
-SELECT * FROM t_schools ts  ;
-SELECT * FROM t_cities tc ;
-SELECT * FROM t_have th  ;
-SELECT * FROM t_accounts ta ;
-SELECT * FROM t_roles;
-SELECT * FROM t_associate;
 
-
-DROP TABLE IF EXISTS t_have CASCADE;
-DROP TABLE IF EXISTS t_graduate CASCADE;
-DROP TABLE IF EXISTS t_formations CASCADE;
-DROP TABLE IF EXISTS t_schools CASCADE;
 DROP TABLE IF EXISTS t_cities CASCADE;
-DROP TABLE IF EXISTS t_alumnis CASCADE;
-DROP TABLE IF EXISTS t_accounts;
+--DROP TABLE IF EXISTS t_graduate CASCADE;
+DROP TABLE IF EXISTS t_diplomas CASCADE;
+DROP TABLE IF EXISTS t_schools CASCADE;
+DROP TABLE IF EXISTS t_formations CASCADE;
+--DROP TABLE IF EXISTS t_alumnis CASCADE;
 DROP TABLE IF EXISTS t_roles CASCADE;
-DROP TABLE IF EXISTS t_associate;
+--DROP TABLE IF EXISTS t_associate;
+DROP TABLE IF EXISTS t_accounts CASCADE;
+
+
 
 CREATE TABLE t_cities(
-   id_city INT GENERATED ALWAYS AS IDENTITY,
-   city VARCHAR(50) NOT NULL,
-   CONSTRAINT t_cities_pkey PRIMARY KEY(id_city),
-   CONSTRAINT t_cities_ukey UNIQUE (city)
-);
-
-CREATE TABLE t_formations(
-   id_formation INT GENERATED ALWAYS AS IDENTITY,
-   formation_name VARCHAR(200) NOT NULL,
-   CONSTRAINT t_formations_pkey PRIMARY KEY(id_formation),
-   CONSTRAINT t_formations_ukey UNIQUE (formation_name)
+   id INT GENERATED ALWAYS AS IDENTITY,
+   name VARCHAR(50) NOT NULL,
+   CONSTRAINT t_cities_pkey PRIMARY KEY(id),
+   CONSTRAINT t_cities_ukey UNIQUE (name)
 );
 
 CREATE TABLE t_schools(
-   id_school INT GENERATED ALWAYS AS IDENTITY,
-   school_name VARCHAR(200) NOT NULL,
+   id INT GENERATED ALWAYS AS IDENTITY,
+   name VARCHAR(200) NOT NULL,
    city_id INT,
-   CONSTRAINT t_schools_pkey PRIMARY KEY(id_school),
-   CONSTRAINT t_schools_ukey UNIQUE (school_name),
-   CONSTRAINT t_schools_city_fkey FOREIGN KEY(city_id) REFERENCES t_cities(id_city)  -- 町とのリレーション
+   CONSTRAINT t_schools_pkey PRIMARY KEY(id),
+   CONSTRAINT t_schools_ukey UNIQUE (name, city_id),
+   CONSTRAINT t_schools_city_fkey FOREIGN KEY(city_id) REFERENCES t_cities(id)  -- 町とのリレーション
+);
+
+CREATE TABLE t_diplomas(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	name VARCHAR(200) NOT NULL,
+	CONSTRAINT t_diplomas_pkey PRIMARY KEY(id),
+	CONSTRAINT t_diplomas_ukey UNIQUE (name)
+	);
+
+CREATE TABLE t_formations(
+   id INT GENERATED ALWAYS AS IDENTITY,
+   name VARCHAR(200) NOT NULL,
+   school_id INT,
+   diploma_id INT,
+   description VARCHAR(1000),
+   url VARCHAR(2083),
+   CONSTRAINT t_formations_schools_fkey FOREIGN KEY(school_id) REFERENCES t_schools(id),
+   CONSTRAINT t_formations_diplomas_fkey FOREIGN KEY(diploma_id) REFERENCES t_diplomas(id),
+   CONSTRAINT t_formations_pkey PRIMARY KEY(id),
+   CONSTRAINT t_formation_ukey UNIQUE (name, school_id, diploma_id)
 );
 
 
 
-CREATE TABLE t_alumnis(
-   id_alumni INT GENERATED ALWAYS AS IDENTITY,
-   alumni_name VARCHAR(50) NOT NULL,
-   CONSTRAINT t_alumnis_pkey PRIMARY KEY(id_alumni),
-   CONSTRAINT t_alumnis_ukey UNIQUE (alumni_name)
-);
 
-CREATE TABLE t_have(
-   id_have INT GENERATED ALWAYS AS IDENTITY,
-   have_school_id INT,
-   have_formation_id INT,
-   CONSTRAINT t_have_pkey PRIMARY KEY(id_have),
-   CONSTRAINT t_have_ukey UNIQUE(have_school_id, have_formation_id),
-   CONSTRAINT t_have_schools_fkey FOREIGN KEY(have_school_id) REFERENCES t_schools(id_school),
-   CONSTRAINT t_have_formations_fkey FOREIGN KEY(have_formation_id) REFERENCES t_formations(id_formation)
-);
 
+--CREATE TABLE t_alumnis(
+--   id_alumni INT GENERATED ALWAYS AS IDENTITY,
+--   alumni_name VARCHAR(50) NOT NULL,
+--   CONSTRAINT t_alumnis_pkey PRIMARY KEY(id_alumni),
+--   CONSTRAINT t_alumnis_ukey UNIQUE (alumni_name)
+--);
+
+--CREATE TABLE t_have(
+--   id_have INT GENERATED ALWAYS AS IDENTITY,
+--   have_school_id INT,
+--   have_formation_id INT,
+--   CONSTRAINT t_have_pkey PRIMARY KEY(id_have),
+--   CONSTRAINT t_have_ukey UNIQUE(have_school_id, have_formation_id),
+--   CONSTRAINT t_have_schools_fkey FOREIGN KEY(have_school_id) REFERENCES t_schools(id_school),
+--   CONSTRAINT t_have_formations_fkey FOREIGN KEY(have_formation_id) REFERENCES t_formations(id_formation)
+--);
+
+/*
 CREATE TABLE t_graduate(
    graduate_formation_school_id INT,
    graduate_alumni_id INT,
@@ -99,30 +109,60 @@ CREATE TABLE t_graduate(
    CONSTRAINT t_graduate_alumnis_fkey FOREIGN KEY(graduate_alumni_id) REFERENCES t_alumnis(id_alumni),
    CONSTRAINT t_graduate_have_fkey FOREIGN KEY(graduate_formation_school_id) REFERENCES t_have(id_have)
 );
+*/
+
+
+CREATE TABLE t_roles(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	authority varchar(60),
+	CONSTRAINT t_roles_pkey PRIMARY KEY (id),
+	CONSTRAINT t_roles_ukey UNIQUE (authority)
+	);
 
 CREATE TABLE t_accounts(
 	id INT GENERATED ALWAYS AS IDENTITY,
 	username varchar(255),
 	password varchar(60),
-	
+	first_name varchar(60),
+	last_name varchar(100),
+	role_id INT,
 	CONSTRAINT t_accounts_pkey PRIMARY KEY (id),
-	CONSTRAINT t_accounts_ukey UNIQUE (username)
+	CONSTRAINT t_accounts_ukey UNIQUE (username),
+	CONSTRAINT t_accounts_roles_fkey FOREIGN KEY(role_id) REFERENCES t_roles(id)
 );
 
-CREATE TABLE t_roles(
+CREATE TABLE t_questions(
 	id INT GENERATED ALWAYS AS IDENTITY,
-	authority varchar(60),
-	default_role boolean,
-	CONSTRAINT t_roles_pkey PRIMARY KEY (id),
-	CONSTRAINT t_roles_ukey UNIQUE (authority)
+	account_id INT NOT NULL,
+	formation_id INT NOT NULL,
+	title varchar(255) NOT NULL,
+	created_at TIMESTAMP NOT NULL,
+	content varchar(2000),
+	CONSTRAINT t_questions_pkey PRIMARY KEY(id),
+	CONSTRAINT t_questions_accounts_fkey FOREIGN KEY(account_id) REFERENCES t_accounts(id),
+	CONSTRAINT t_questions_formations_fkey FOREIGN KEY(formation_id) REFERENCES t_formations(id),
+	CONSTRAINT t_questions_ukey UNIQUE (account_id, formation_id, title)
 	);
 
-CREATE TABLE t_associate(
-	id_associate INT GENERATED ALWAYS AS IDENTITY,
-	associate_account_id INT,
-	associate_role_id INT,
-	CONSTRAINT t_associate_pkey PRIMARY KEY (id_associate),
-	CONSTRAINT t_associate_ukey UNIQUE (associate_account_id, associate_role_id),
-	CONSTRAINT t_associate_accounts_fkey FOREIGN KEY (associate_account_id) REFERENCES t_accounts(id),
-	CONSTRAINT t_associate_roles_fkey FOREIGN KEY (associate_role_id) REFERENCES t_roles(id)
+CREATE TABLE t_answers(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	question_id INT NOT NULL,
+	answered_account_id INT NOT NULL,
+	content varchar (2000),
+	created_at TIMESTAMP NOT NULL,
+	CONSTRAINT t_answers_pkey PRIMARY KEY (id),
+	CONSTRAINT t_answers_questions_fkey FOREIGN KEY (question_id) REFERENCES t_questions(id),
+	CONSTRAINT t_answers_accounts_fkey FOREIGN KEY (answered_account_id) REFERENCES t_accounts(id),
+	CONSTRAINT t_answers_ukey UNIQUE (question_id, answered_account_id, created_at)
 );
+
+
+--CREATE TABLE t_associate(
+--	id_associate INT GENERATED ALWAYS AS IDENTITY,
+--	associate_account_id INT,
+--	associate_role_id INT,
+--	CONSTRAINT t_associate_pkey PRIMARY KEY (id_associate),
+--	CONSTRAINT t_associate_ukey UNIQUE (associate_account_id, associate_role_id),
+--	CONSTRAINT t_associate_accounts_fkey FOREIGN KEY (associate_account_id) REFERENCES t_accounts(id),
+--	CONSTRAINT t_associate_roles_fkey FOREIGN KEY (associate_role_id) REFERENCES t_roles(id)
+--);

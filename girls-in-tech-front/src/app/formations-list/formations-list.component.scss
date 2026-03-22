@@ -2,6 +2,13 @@ mat-card {
   background-color: #FFC1A3;
 }
 
-mat-card-subtitle{
+mat-card-subtitle {
   font-size: 1.15rem;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
 }

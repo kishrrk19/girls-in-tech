@@ -1,7 +1,10 @@
-<app-header></app-header>
+<div class="layout-container">
+  <app-header></app-header>
 
-<div class="main-content">
-  <div class="content">
-    <router-outlet></router-outlet> <!-- 各ページコンテンツをここに表示 -->
+  <div class="main-content">
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
+  <app-footer class="m-1"></app-footer>
 </div>

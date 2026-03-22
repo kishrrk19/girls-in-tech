@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.security.authentication.BadCredentialsException;
@@ -38,14 +39,20 @@ public class AccountService {
 
 	@Transactional
 	public void create(AccountCreate inputs) {
-		
-		Set<Role> role = roles.findByIsDefaultTrue();
+
+		Role role = roles.findById(inputs.roleId())
+				.orElseThrow(()-> new IllegalArgumentException("No role associated"));
 		
 		String username = inputs.username();
 		
 		String passencode = encoder.encode(inputs.password());
 		
-		Account account = new Account(username, passencode, role);
+		Account account = new Account();
+		account.setUsername(username);
+		account.setPassword(passencode);
+		account.setRole(role);
+		account.setFirstName(inputs.firstName());
+		account.setLastName(inputs.lastName());
 		
 		accounts.save(account);
 		
@@ -58,25 +65,28 @@ public class AccountService {
 				.orElseThrow(() -> new BadCredentialsException(inputsUsername));
 		
 		//recuperer un set de roles de cet entite pour envoyer avec Token sous forme de AuthInfo DTO
-		Set<Role> roles = entity.getRoles();
-		Set<String> roleInfos = new HashSet<>();
-		
-		for(Role role : roles) {
-			String rolename = role.getAuthority();
-			roleInfos.add(rolename);
-		}
+//		Set<Role> roles = entity.getRoles();
+//		Set<String> roleInfos = new HashSet<>();
+//
+//		for(Role role : roles) {
+//			String rolename = role.getAuthority();
+//			roleInfos.add(rolename);
+//		}
 		
 		boolean compared = encoder.matches(inputs.password(), entity.getPassword());
 		if(compared) {
-			String tokenJWT = jwtProvider.create(inputsUsername, entity.getRoles());
+			String tokenJWT = jwtProvider.create(inputsUsername, entity.getRole());
 			
-			AuthInfo info = new AuthInfo(tokenJWT, roleInfos);
+			AuthInfo info = new AuthInfo(tokenJWT, entity.getFirstName(), entity.getLastName(), entity.getRole().getAuthority());
 			return info;
 		}else {
 			throw new BadCredentialsException(inputsUsername);
 		}
 		
 	}
-	
 
+
+	public boolean emailExist(String email) {
+		return accounts.existsByUsernameIgnoreCase(email);
+	}
 }
