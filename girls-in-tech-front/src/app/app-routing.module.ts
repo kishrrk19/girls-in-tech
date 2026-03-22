@@ -13,6 +13,8 @@ import { HomeComponent } from './layouts/home/home.component';
 import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
 import { QuestionResponseDetailComponent } from './layouts/question-response-detail/question-response-detail.component';
+import { CreateQuestionComponent } from './features/q-and-a/create-question/create-question.component';
+import { ConfirmationCreationQuestionComponent } from './features/q-and-a/confirmation-creation-question/confirmation-creation-question.component';
 
 const routes: Routes = [
   { path: 'create-formation-school', canActivate: [adminGuard], component: CreateFormationSchoolComponent },//OK
@@ -25,6 +27,8 @@ const routes: Routes = [
   { path: 'update-delete', canActivate: [adminGuard], component: UpdateAndDeleteFormationComponent },
   { path: 'list', component: FormationListHomeComponent },//? je ne sais pas
   { path: 'question-detail', component: QuestionResponseDetailComponent },
+  { path: 'create-question', component: CreateQuestionComponent },
+  { path: 'confirmation-create-question', component: ConfirmationCreationQuestionComponent },
   { path: '', component: HomeComponent }, // 初期ページ
   { path: '**', component: HomeComponent } // 不明なURLのリダイレクト
 ];

@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 @UniqueQuestion
 public record QuestionCreate (
         @NotNull Long formationId,
-        @NotNull Long userId,
         @NotBlank String title,
         @NotBlank String content
 ) {

@@ -4,6 +4,7 @@ import { FormationDataService } from '../../services/formation-data.service';
 import { formationData } from '../../models/formation-data';
 import { ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-formation-school-detail',
@@ -19,7 +20,9 @@ export class FormationSchoolDetailComponent implements OnInit {
   diplomaName: string = '';
   city: string = '';
   formationsListData$!: Observable<any>;
-  constructor(private route: ActivatedRoute, private formationDataService: FormationDataService, private cdr: ChangeDetectorRef) {
+  constructor(private route: ActivatedRoute, private formationDataService: FormationDataService, private cdr: ChangeDetectorRef,
+    private location: Location
+  ) {
   }
 
   ngOnInit(): void {
@@ -40,9 +43,10 @@ export class FormationSchoolDetailComponent implements OnInit {
         complete: () => console.log('data is retrieved')
       })
     }
-    );
+    )
+  }
 
-
-
+  goBack(): void {
+    this.location.back();
   }
 }

@@ -32,6 +32,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { AuthTokenInterceptor } from './core/interceptors/auth-token.interceptor';
 import { ListQuestionsByFormationComponent } from './features/q-and-a/list-questions-by-formation/list-questions-by-formation.component';
 import { QuestionResponseDetailComponent } from './layouts/question-response-detail/question-response-detail.component';
+import { CreateQuestionComponent } from './features/q-and-a/create-question/create-question.component';
+import { ConfirmationCreationQuestionComponent } from './features/q-and-a/confirmation-creation-question/confirmation-creation-question.component';
+import { FooterComponent } from './layouts/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +53,10 @@ import { QuestionResponseDetailComponent } from './layouts/question-response-det
     UpdateAndDeleteFormationComponent,
     HomeComponent,
     ListQuestionsByFormationComponent,
-    QuestionResponseDetailComponent
+    QuestionResponseDetailComponent,
+    CreateQuestionComponent,
+    ConfirmationCreationQuestionComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

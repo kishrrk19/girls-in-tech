@@ -1,5 +1,6 @@
 package co.simplon.girls_in_tech_business.services;
 
+import co.simplon.girls_in_tech_business.common.CurrentUserManagerUtils;
 import co.simplon.girls_in_tech_business.dtos.QuestionCreate;
 import co.simplon.girls_in_tech_business.dtos.QuestionView;
 import co.simplon.girls_in_tech_business.entities.Account;
@@ -34,7 +35,8 @@ public class QuestionService {
 
     public void create (QuestionCreate inputs){
 
-        Account account = accounts.findById(inputs.userId())
+
+        Account account = accounts.findByUsername(CurrentUserManagerUtils.getAuthenticatedUser())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         Formation formation = formations.findById(inputs.formationId())
@@ -50,8 +52,10 @@ public class QuestionService {
     }
 
     public boolean isUniqueQuestion(QuestionCreate questionInput) {
-        return !questions.existsByAccount_IdAndFormation_IdAndTitle(
-                questionInput.userId(), questionInput.formationId(), questionInput.title()
+
+
+        return !questions.existsByAccount_UsernameAndFormation_IdAndTitle(
+                CurrentUserManagerUtils.getAuthenticatedUser(), questionInput.formationId(), questionInput.title()
         );
     }
 

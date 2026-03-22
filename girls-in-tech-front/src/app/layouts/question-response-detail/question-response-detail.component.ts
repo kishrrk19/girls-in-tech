@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Question } from '../../models/question';
 import { Answer } from '../../models/answer';
 import { AnswerDataService } from '../../services/answer-data-service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-question-response-detail',
@@ -25,7 +26,9 @@ export class QuestionResponseDetailComponent implements OnInit {
   answers: Answer[] = [];
   notYetAnswer: boolean = true;
 
-  constructor(private answerDataService: AnswerDataService, private route: ActivatedRoute) { }
+  constructor(private answerDataService: AnswerDataService, private route: ActivatedRoute,
+    private location: Location
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -45,6 +48,7 @@ export class QuestionResponseDetailComponent implements OnInit {
   }
 
   private loadAnwsers() {
+    console.log(this.question.id)
     this.answerDataService.getAllAnswersByQuestion(this.question.id).subscribe(res => {
       if (res.length !== 0) {
         this.answers = res;
@@ -52,6 +56,10 @@ export class QuestionResponseDetailComponent implements OnInit {
         this.notYetAnswer = false;
       }
     })
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }

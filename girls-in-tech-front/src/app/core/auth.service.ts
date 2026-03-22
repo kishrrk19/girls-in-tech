@@ -20,7 +20,7 @@ export class AuthService {
         const token = localStorage.getItem('token');
         if (token) {
             this._auth$.next({
-                token,
+                token: token,
                 firstName: localStorage.getItem('firstName') ?? '',
                 lastName: localStorage.getItem('lastName') ?? '',
                 role: localStorage.getItem('role') ?? ''

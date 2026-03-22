@@ -27,6 +27,7 @@ export class ListQuestionsByFormationComponent implements OnInit {
   private loadQuestions() {
     this.questionDataService.getAllQuestionByFormation(this.formationId).subscribe(res => {
       this.questionsListData = res;
+      console.log(this.questionsListData);
     });
   }
 
@@ -39,5 +40,10 @@ export class ListQuestionsByFormationComponent implements OnInit {
     })
   }
 
+  askQuestion() {
+    this.router.navigate(['create-question'], {
+      queryParams: { formationId: this.formationId, formationName: this.formationName, schoolName: this.schoolName }
+    })
+  }
 
 }
