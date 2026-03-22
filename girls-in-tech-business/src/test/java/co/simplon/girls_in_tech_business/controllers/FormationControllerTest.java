@@ -32,7 +32,7 @@ class FormationControllerTest {
         MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.request(HttpMethod.GET, "/formation/4");
         ResultActions result = mvcServeur.perform(builder);
         result.andExpect(status().isOk())
-                .andExpect(jsonPath("$.formationName").value("Ingénieur Généraliste"));
+                .andExpect(jsonPath("$.formationName").value("Ingénieur Généraliste1"));
     }
 
     @DisplayName("Recherche Formations : Should return all formations that have key words of input")

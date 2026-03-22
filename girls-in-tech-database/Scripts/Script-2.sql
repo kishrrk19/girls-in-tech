@@ -2,7 +2,7 @@
 --CREATE SCHEMA girlsintech_schema_test;
 
 --SELECT * FROM t_formations tf ;
-SELECT * FROM t_accounts ta ;
+--SELECT * FROM girlsintech_schema_test.t_formations ta ;
 
 DROP TABLE IF EXISTS t_cities CASCADE;
 DROP TABLE IF EXISTS t_diplomas CASCADE;
@@ -60,10 +60,37 @@ CREATE TABLE girlsintech_schema_test.t_accounts(
 	id INT GENERATED ALWAYS AS IDENTITY,
 	username varchar(255),
 	password varchar(60),
+	first_name varchar(60),
+	last_name varchar(100),
 	role_id INT,
 	CONSTRAINT t_accounts_pkey PRIMARY KEY (id),
 	CONSTRAINT t_accounts_ukey UNIQUE (username),
 	CONSTRAINT t_accounts_roles_fkey FOREIGN KEY(role_id) REFERENCES t_roles(id)
+);
+
+CREATE TABLE girlsintech_schema_test.t_questions(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	account_id INT NOT NULL,
+	formation_id INT NOT NULL,
+	title varchar(255) NOT NULL,
+	created_at TIMESTAMP NOT NULL,
+	content varchar(2000),
+	CONSTRAINT t_questions_pkey PRIMARY KEY(id),
+	CONSTRAINT t_questions_accounts_fkey FOREIGN KEY(account_id) REFERENCES t_accounts(id),
+	CONSTRAINT t_questions_formations_fkey FOREIGN KEY(formation_id) REFERENCES t_formations(id),
+	CONSTRAINT t_questions_ukey UNIQUE (account_id, formation_id, title)
+	);
+
+CREATE TABLE girlsintech_schema_test.t_answers(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	question_id INT NOT NULL,
+	answered_account_id INT NOT NULL,
+	content varchar (2000),
+	created_at TIMESTAMP NOT NULL,
+	CONSTRAINT t_answers_pkey PRIMARY KEY (id),
+	CONSTRAINT t_answers_questions_fkey FOREIGN KEY (question_id) REFERENCES t_questions(id),
+	CONSTRAINT t_answers_accounts_fkey FOREIGN KEY (answered_account_id) REFERENCES t_accounts(id),
+	CONSTRAINT t_answers_ukey UNIQUE (question_id, answered_account_id, created_at)
 );
 
 --spécific DML pour test
