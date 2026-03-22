@@ -1,0 +1,29 @@
+<h1 class="text-center mt-3">Pose ta question à des alumni de cette formation !</h1>
+<h2 class="text-center mt-3">{{schoolName}}</h2>
+<h2 class="text-center mt-3">{{formationName}}</h2>
+<div class="container">
+    <form class="d-flex flex-column mx-3" [formGroup]="questionCreationForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="custom-mat-form-field">
+            <label for="title" class="fs-5">
+                Titre de question<span class="text-danger">*</span>
+            </label>
+            <textarea matInput id="title" maxlength="255" placeholder="max 255 charactères"
+                formControlName="title"></textarea>
+            <mat-error
+                *ngIf="questionCreationForm.get('title')?.touched && questionCreationForm.get('title')?.invalid">{{
+                getErrorMessage('title') }}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="custom-mat-form-field">
+            <textarea matInput id="content" maxlength="255" placeholder="Ecris ici ta question max 2000 charactères"
+                formControlName="content"></textarea>
+            <mat-error
+                *ngIf="questionCreationForm.get('content')?.touched && questionCreationForm.get('content')?.invalid">{{
+                getErrorMessage('content') }}</mat-error>
+        </mat-form-field>
+
+
+        <div class="d-flex justify-content-center m-4">
+            <button class="btn btn-primary" [disabled]="questionCreationForm.invalid">Ajouter</button>
+        </div>
+    </form>
+</div>

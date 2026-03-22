@@ -16,6 +16,12 @@ public class Account extends AbstractEntity{
 	
 	@Column(name="password")
 	private String password;
+
+	@Column(name="first_name")
+	private String firstName;
+
+	@Column(name = "last_name")
+	private String lastName;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name= "role_id")
@@ -89,5 +95,21 @@ public class Account extends AbstractEntity{
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

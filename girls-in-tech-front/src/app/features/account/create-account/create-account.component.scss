@@ -1,0 +1,13 @@
+#container {
+  max-width: 50%;
+}
+
+.radio-group {
+  justify-content: space-around;
+}
+
+@media(max-width : 768px) {
+  #container {
+    max-width: 80%;
+  }
+}

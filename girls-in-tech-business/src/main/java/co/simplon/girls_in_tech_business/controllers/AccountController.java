@@ -26,7 +26,7 @@ public class AccountController {
 	
 	@PostMapping("/creer-compte")
 	@ResponseStatus(HttpStatus.CREATED)
-	void create(@RequestBody AccountCreate inputs) {
+	void create(@RequestBody @Valid AccountCreate inputs) {
 		service.create(inputs);
 	}
 	

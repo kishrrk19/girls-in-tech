@@ -1,0 +1,77 @@
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+
+@Component({
+  selector: 'app-create-formation-school',
+  templateUrl: './create-formation-school.component.html',
+  styleUrl: './create-formation-school.component.scss'
+})
+export class CreateFormationSchoolComponent implements OnInit {
+  formationCreationForm!: FormGroup;
+  private baseUrl = environment.gatewayUrl;
+
+  constructor(private fb: FormBuilder, private http: HttpClient) { }
+
+  ngOnInit(): void {
+    this.formationCreationForm = this.fb.group({
+      schoolName: ['', [Validators.required, Validators.maxLength(200)]],
+      formationName: ['', [Validators.required, Validators.maxLength(200)]],
+      diplomaName: ['', [Validators.required, Validators.maxLength(200)]],
+      city: ['', [Validators.required, Validators.maxLength(50)]],
+      description: ['', Validators.maxLength(1000)],
+      url: ['', Validators.maxLength(2083)]
+    });
+  }
+
+  onSubmit() {
+    if (this.formationCreationForm.valid) {
+      const formData = this.formationCreationForm.value;
+
+      this.http.post(`${this.baseUrl}/formation/create`, formData, { observe: 'response' }).subscribe(
+        response => {
+          if (response.status === 201) {
+            alert("Votre formation est bien enregistrée!");
+            this.formationCreationForm.reset();
+          }
+        },
+        error => {
+          if (error.status === 400 && error.error.globalErrors?.includes("UniqueSchoolCityFormationDiploma")) {
+            alert("Cette formation existe déjà.");
+          } else if (error.status === 409) {
+            alert(error.error);
+          }
+          else {
+            console.error('Erreur d envoie', error);
+            alert("Une erreur s'est produite. Veillez réessayer.");
+          }
+        }
+      );
+    }
+  }
+
+  getErrorMessage(controlName: string): string {
+    const control = this.formationCreationForm.get(controlName);
+    if (control?.hasError('required')) {
+      console.log('obki')
+      return 'Ce champ est obligatoire.';
+    }
+    if (control?.hasError('maxlength')) {
+      const maxlength = control.getError('maxlength').requiredLength;
+      return `Maximum ${maxlength}`;
+    }
+
+    return '';
+  }
+
+  markFieldAsTouched(controlName: string): void {
+    console.log("appeled");
+    const control = this.formationCreationForm.get(controlName);
+    if (control) {
+      console.log("appel")
+      control.markAsTouched();
+      control.updateValueAndValidity();
+    }
+  }
+}
