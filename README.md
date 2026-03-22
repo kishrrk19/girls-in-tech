@@ -58,7 +58,7 @@ co.simplon.girls_in_tech.issuer=http://localhost:8080
  
 Run as `Spring Boot App`
 
-### Front-end
+## Front-end
 
 Install the dependencies:
 ```bash
