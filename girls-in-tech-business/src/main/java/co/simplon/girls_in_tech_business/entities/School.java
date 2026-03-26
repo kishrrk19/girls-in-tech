@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 public class School extends AbstractEntity{
 	
 	@Column(name= "name")
-	String name;
+	private String name;
 	
 //	@ManyToMany(mappedBy = "schools", cascade = CascadeType.PERSIST)
 //    private Set<Formation> formations = new HashSet<>();

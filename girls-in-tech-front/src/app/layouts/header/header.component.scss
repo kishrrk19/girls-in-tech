@@ -1,6 +1,11 @@
 .background-color {
-  background-color: #F78887;
+  background:
+    radial-gradient(circle at top right, rgba(233, 140, 140, 0.10), transparent 55%),
+    linear-gradient(135deg, #fffafa 0%, #fdeeee 100%);
   width: 100%;
+  border: none;
+  box-shadow: none;
+
 }
 
 .title {
@@ -9,16 +14,25 @@
 
 header {
   //text-align: center;
-  background-color: #F78887;
+  background:
+    radial-gradient(circle at top right, rgba(233, 140, 140, 0.10), transparent 55%),
+    linear-gradient(135deg, #fffafa 0%, #fdeeee 100%);
   //margin-bottom: 20px;
   padding: 10px;
+  border: none;
+  box-shadow: none;
+
   //align-items: center;
 }
 
 h1 {
   margin: 16px;
   font-size: 2rem;
-  color: whitesmoke;
+  color: #F78887;
+}
+
+.container {
+  margin: 0 auto;
 }
 
 // .header {
@@ -37,7 +51,7 @@ h1 {
 // }
 
 a {
-  color: whitesmoke;
+  color: #F78887;
   text-decoration: none;
 }
 

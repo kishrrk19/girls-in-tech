@@ -4,7 +4,7 @@
 
 <div *ngIf="!spin">
   <div class="container">
-    <h1>Resultat des formations de votre requête :</h1>
+    <h1 class="mt-2">Resultat des formations de ta requête :</h1>
     <h2 #topOfResult><span>Mots clés : </span><span *ngFor="let key of queryKeys; let i = index"><span>{{key}}<span
             *ngIf="i < queryKeys.length - 1">, </span></span></span>
     </h2>
@@ -30,7 +30,7 @@
 
     </ng-container>
     <div *ngIf="noResult">
-      <h2>Il n'y a pas de formations associés à votre recherche</h2>
+      <h2>Il n'y a pas de formations associés à ta recherche</h2>
     </div>
   </div>
 </div>
