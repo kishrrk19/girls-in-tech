@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 public class City extends AbstractEntity{
 	
 	@Column(name="name")
-	String name;
+	private String name;
 	
 	@OneToMany(mappedBy = "city")
     private Set<School> schools = new HashSet<>();

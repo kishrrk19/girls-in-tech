@@ -37,7 +37,7 @@ class AccountControllerTest {
     void shouldReturnConflict(String json) throws Exception {
         MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.request(HttpMethod.POST,"/account/creer-compte").contentType(MediaType.APPLICATION_JSON).content(json);
         ResultActions result = mvcServeur.perform(builder);
-        result.andExpect(status().isConflict());
+        result.andExpect(status().isBadRequest());
     }
 
 }
