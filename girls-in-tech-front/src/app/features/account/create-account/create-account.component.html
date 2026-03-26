@@ -4,27 +4,33 @@
     <mat-form-field>
       <mat-label>Votre adress mail</mat-label>
       <input matInput placeholder="bonjour@example.com" formControlName="username" required />
-      <mat-error *ngIf="accountCreationForm.get('username')?.invalid">{{ errorMessage }}</mat-error>
+      <mat-error *ngIf="accountCreationForm.get('username')?.invalid">{{ getErrorMessage('username') }}</mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Mot de passe</mat-label>
-      <input matInput type="password" formControlName="password" required />
-    </mat-form-field>
+
     <mat-form-field>
       <mat-label>Votre Nom</mat-label>
       <input matInput placeholder="Dupont" formControlName="lastName" required />
+      <mat-error *ngIf="accountCreationForm.get('lastName')?.invalid">{{ getErrorMessage('lastName') }}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Votre Prénom</mat-label>
       <input matInput placeholder="Marie" formControlName="firstName" required />
+      <mat-error *ngIf="accountCreationForm.get('firstName')?.invalid">{{ getErrorMessage('firstName') }}</mat-error>
     </mat-form-field>
-    <label class="mb-2">Votre status</label>
-    <mat-radio-group formControlName="roleId" class="d-flex flex-row mb-3 radio-group">
+    <mat-form-field class="mb-3" subscriptSizing="dynamic">
+      <mat-label>Mot de passe</mat-label>
+      <input matInput type="password" formControlName="password" required />
+      <mat-error *ngIf="accountCreationForm.get('password')?.invalid">{{
+        getErrorMessage('password') }}</mat-error>
+    </mat-form-field>
+    <label>Votre status*</label>
+    <mat-radio-group formControlName="roleId" class="d-flex flex-row mb-3 radio-group" required>
       <mat-radio-button [value]="2">Collégienne / Lycéenne</mat-radio-button>
       <mat-radio-button [value]="3">Alumni</mat-radio-button>
     </mat-radio-group>
+    <div class="uniqueMail" *ngIf="!uniqueUsername">Ce adress mail est déjà utilisé.</div>
     <div class="d-flex justify-content-center m-4">
-      <button class="btn btn-primary">Creer</button>
+      <button class="btn btn-primary" [disabled]="accountCreationForm.invalid">Creer</button>
     </div>
   </form>
 </div>

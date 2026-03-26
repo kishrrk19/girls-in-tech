@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   private baseUrl = environment.gatewayUrl;
+  nonValidInput: boolean = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private authService: AuthService) {
 
@@ -29,6 +30,18 @@ export class LoginComponent implements OnInit {
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{4,}$'),
       ]]
     })
+  }
+
+  getErrorMessage(controlName: string): string {
+    const control = this.loginForm.get(controlName);
+    if (control?.hasError('required')) {
+      return 'Ce champ est obligatoire.';
+    }
+    if (control?.hasError('minLength') || control?.hasError('maxLength') || control?.hasError('pattern') || control?.hasError('email')) {
+      return `Le champ n'est pas valide.`;
+    }
+
+    return '';
   }
 
   onSubmit() {
@@ -46,9 +59,15 @@ export class LoginComponent implements OnInit {
 
         },
         error: (error) => {
+          if (error.status === 401) {
+            this.nonValidInput = true;
+          }
           console.error('Erreur d envoie', error);
         }
       })
     }
   }
+
+
+
 }
