@@ -35,6 +35,7 @@ import { QuestionResponseDetailComponent } from './layouts/question-response-det
 import { CreateQuestionComponent } from './features/q-and-a/create-question/create-question.component';
 import { ConfirmationCreationQuestionComponent } from './features/q-and-a/confirmation-creation-question/confirmation-creation-question.component';
 import { FooterComponent } from './layouts/footer/footer.component';
+import { ConstructionComponent } from './layouts/construction/construction.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { FooterComponent } from './layouts/footer/footer.component';
     QuestionResponseDetailComponent,
     CreateQuestionComponent,
     ConfirmationCreationQuestionComponent,
-    FooterComponent
+    FooterComponent,
+    ConstructionComponent
   ],
   imports: [
     BrowserModule,

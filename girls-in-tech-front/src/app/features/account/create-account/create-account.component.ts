@@ -15,6 +15,7 @@ export class CreateAccountComponent implements OnInit {
 
   accountCreationForm!: FormGroup;
   errorMessage = '';
+  uniqueUsername = true;
   private baseUrl = environment.gatewayUrl;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
@@ -34,27 +35,44 @@ export class CreateAccountComponent implements OnInit {
       roleId: [null, [Validators.required]]
     })
 
-    const emailControl = this.accountCreationForm.get('username');
 
-    // emailのstatusChangesとvalueChangesを監視してエラーメッセージを更新
-    if (emailControl) {
-      merge(emailControl?.statusChanges, emailControl?.valueChanges)
-        .pipe(takeUntilDestroyed())
-        .subscribe(() => this.updateErrorMessage(emailControl));
-    }
+
+    // const emailControl = this.accountCreationForm.get('username');
+
+    // // emailのstatusChangesとvalueChangesを監視してエラーメッセージを更新
+    // if (emailControl) {
+    //   merge(emailControl?.statusChanges, emailControl?.valueChanges)
+    //     .pipe(takeUntilDestroyed())
+    //     .subscribe(() => this.updateErrorMessage(emailControl));
+    // }
 
   }
 
-  updateErrorMessage(emailControl: AbstractControl | null): void {
-    if (!emailControl) return;
+  // updateErrorMessage(emailControl: AbstractControl | null): void {
+  //   if (!emailControl) return;
 
-    if (emailControl.hasError('required')) {
-      this.errorMessage = 'Champ est vide, mettez votre adress mail';
-    } else if (emailControl.hasError('username')) {
-      this.errorMessage = "Votre adress mail n'est pas valide";
-    } else {
-      this.errorMessage = '';
+  //   if (emailControl.hasError('required')) {
+  //     this.errorMessage = 'Champ est vide, mettez votre adress mail';
+  //   } else if (emailControl.hasError('username')) {
+  //     this.errorMessage = "Votre adress mail n'est pas valide";
+  //   } else {
+  //     this.errorMessage = '';
+  //   }
+  // }
+
+  getErrorMessage(controlName: string): string {
+    const control = this.accountCreationForm.get(controlName);
+    if (control?.hasError('required')) {
+      return 'Ce champ est obligatoire.';
     }
+    if (control?.hasError('minLength') || control?.hasError('maxLength') || control?.hasError('pattern')) {
+      return `Le mot de passe doit comporter entre 4 et 20 caractères, dont au moins une minuscule, une majuscule, un chiffre et un caractère spécial (@$!%*?&).`;
+    }
+    if (control?.hasError('email')) {
+      return `Le mail n'est pas valide`;
+    }
+
+    return '';
   }
 
   onSubmit() {
@@ -68,6 +86,10 @@ export class CreateAccountComponent implements OnInit {
           this.router.navigateByUrl('/login')
         },
         error: (error) => {
+          if (error.error.fieldErrors.username[0] == 'UniqueEmail' || error.status === 409) {
+
+            this.uniqueUsername = false;
+          }
           console.error('Erreur d envoie', error);
         }
       })

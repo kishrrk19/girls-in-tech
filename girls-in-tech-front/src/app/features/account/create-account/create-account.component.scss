@@ -6,6 +6,16 @@
   justify-content: space-around;
 }
 
+.error-message {
+  display: block;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.uniqueMail {
+  color: blue;
+}
+
 @media(max-width : 768px) {
   #container {
     max-width: 80%;
