@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -27,19 +26,10 @@ public class JwtProvider {
 	
 	public String create(String subject, Role role) {
 		Instant issuedAt = Instant.now();
-		
-//		ArrayList<String> rolesList = new ArrayList<>();
-//		roles.forEach(role -> {
-//			String authority = role.getAuthority();
-//			rolesList.add(authority);
-//		});
-		
-//		String[] rolesArray = rolesList.toArray(new String[0]);
 
 		String roleUser = role.getAuthority();
 		List<String> rolesList = new ArrayList<>();
 		rolesList.add(roleUser);
-		//String[] rolesArray = rolesList.toArray(new String[0]);
 		
 		Builder builder = JWT.create().withIssuedAt(issuedAt).withSubject(subject)
 				.withExpiresAt(OffsetDateTime.now().plusMinutes(expirationMinutes).toInstant())

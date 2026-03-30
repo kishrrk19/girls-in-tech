@@ -3,6 +3,7 @@ package co.simplon.girls_in_tech_business.controllers;
 import co.simplon.girls_in_tech_business.dtos.AnswerCreate;
 import co.simplon.girls_in_tech_business.dtos.AnswerView;
 import co.simplon.girls_in_tech_business.services.AnswerService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +22,13 @@ public class AnswerController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createAnswer(@RequestBody AnswerCreate inputs){
+    public ResponseEntity<Object> createAnswer(@RequestBody @Valid AnswerCreate inputs){
         service.create(inputs);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/{questionId}")
-    public ResponseEntity<HashSet<AnswerView>> getAnswersByQuestion(@PathVariable Long questionId){
+    public ResponseEntity<HashSet<AnswerView>> getAnswersByQuestion(@PathVariable @Valid Long questionId){
         List<AnswerView> answers = service.getAllAnswersByQuestion(questionId);
         return ResponseEntity.ok(new HashSet<>(answers));
     }

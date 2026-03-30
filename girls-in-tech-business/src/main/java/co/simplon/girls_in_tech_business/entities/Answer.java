@@ -10,11 +10,11 @@ public class Answer extends AbstractEntity{
 
     public Answer(){}
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answered_account_id")
     private Account account;
 

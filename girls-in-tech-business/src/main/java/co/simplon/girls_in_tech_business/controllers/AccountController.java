@@ -1,7 +1,7 @@
 package co.simplon.girls_in_tech_business.controllers;
 
+import co.simplon.girls_in_tech_business.services.AccountService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import co.simplon.girls_in_tech_business.dtos.AccountCreate;
 import co.simplon.girls_in_tech_business.dtos.AuthInfo;
 import co.simplon.girls_in_tech_business.dtos.Login;
-import co.simplon.girls_in_tech_business.services.AccountService;
 import jakarta.validation.Valid;
 
 @RestController

@@ -11,11 +11,8 @@ public class School extends AbstractEntity{
 	
 	@Column(name= "name")
 	private String name;
-	
-//	@ManyToMany(mappedBy = "schools", cascade = CascadeType.PERSIST)
-//    private Set<Formation> formations = new HashSet<>();
-//	
-	@ManyToOne(fetch = FetchType.EAGER)
+
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", nullable = false)  // city_idでCityと紐付け
     private City city;
 

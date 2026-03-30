@@ -4,17 +4,12 @@ import java.util.HashSet;
 import java.util.List;
 
 import co.simplon.girls_in_tech_business.dtos.*;
-import co.simplon.girls_in_tech_business.entities.Formation;
-import co.simplon.girls_in_tech_business.repositories.FormationSpecification;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
+import co.simplon.girls_in_tech_business.services.FormationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import co.simplon.girls_in_tech_business.services.FormationService;
+
 import jakarta.validation.Valid;
 
 @RestController
@@ -64,18 +59,6 @@ public class FormationController {
 	void updateFormation(@PathVariable("formationId") Long formationId, @Valid @RequestBody FormationUpdate inputs) {
 		service.updateFormation(formationId, inputs);
 	}
-
-//	@GetMapping("/formations/{formationId}")
-//	public ResponseEntity<List<FormationView>> getFormations(@PathVariable Long formationId){
-//		List<FormationView> formationsList = service.getFormationsList(formationId);
-//		return ResponseEntity.ok(formationsList);
-//	}
-	
-//	@GetMapping("/{associateId}")//used by update
-//	public ResponseEntity<FormationView> getOneFormation(@PathVariable Long associateId){
-//		FormationView formation = service.getOneFormation(associateId);
-//		return ResponseEntity.ok(formation);
-//	}
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Object> deleteFormation(@PathVariable Long id){

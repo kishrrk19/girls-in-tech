@@ -12,29 +12,15 @@ public class Role extends AbstractEntity {
 
 	@Column(name = "authority")
 	private String authority;
-	
-//	@Column(name = "default_role")
-//	private boolean isDefault;
+
 	
 	public Role() {
-		this.authority= null;
-		//this.isDefault = false;
-	}
-	
-	public Role(String authority, Boolean isDefault) {
-		Objects.requireNonNull(authority);
-		Objects.requireNonNull(isDefault);
-		this.authority= authority;
-		//this.isDefault= isDefault;
 	}
 
 	public String getAuthority() {
 		return authority;
 	}
 
-//	public boolean isDefault() {
-//		return isDefault;
-//	}
 
 	@Override
 	public int hashCode() {

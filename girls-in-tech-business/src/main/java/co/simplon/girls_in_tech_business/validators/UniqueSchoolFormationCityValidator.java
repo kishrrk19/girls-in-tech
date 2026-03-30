@@ -1,7 +1,5 @@
 package co.simplon.girls_in_tech_business.validators;
 
-import co.simplon.girls_in_tech_business.dtos.FormationCreate;
-import co.simplon.girls_in_tech_business.dtos.FormationUpdate;
 import co.simplon.girls_in_tech_business.services.FormationService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

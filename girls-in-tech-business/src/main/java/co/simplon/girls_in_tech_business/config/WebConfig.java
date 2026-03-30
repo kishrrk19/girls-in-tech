@@ -44,6 +44,8 @@ public class WebConfig {
 //	@Value("${co.simplon.girls_in_tech.cors}")
 //	private String origins;
 
+	//Cors: 別のオリジンからのアクセスをブラウザが制御する仕組み
+
 	@Bean
 	@Profile("dev")
 	public WebMvcConfigurer corsConfigurer(
@@ -122,7 +124,7 @@ public class WebConfig {
 
 	}
 
-
+//*For prod
 //	@Bean
 //	@Profile("!dev")
 //	SecurityFilterChain prodFilterChain(HttpSecurity http) throws Exception{

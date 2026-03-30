@@ -9,11 +9,11 @@ import java.util.Date;
 @Table(name= "t_questions")
 public class Question extends AbstractEntity{
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "formation_id")
     private Formation formation;
 

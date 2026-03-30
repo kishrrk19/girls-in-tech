@@ -12,11 +12,11 @@ public class Formation extends AbstractEntity{
 	@Column(name= "name")
 	private String name;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "school_id")
 	private School school;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "diploma_id")
 	private Diploma diploma;
 
@@ -25,15 +25,6 @@ public class Formation extends AbstractEntity{
 
 	@Column(name="url")
 	private String url;
-	
-	
-//	@ManyToMany
-//    @JoinTable(
-//        name = "t_have",
-//        joinColumns = @JoinColumn(name = "have_formation_id"),
-//        inverseJoinColumns = @JoinColumn(name = "have_school_id")
-//    )
-//    private Set<School> schools = new HashSet<>();
 
 	public Formation() {}
 

@@ -23,7 +23,7 @@ public class Account extends AbstractEntity{
 	@Column(name = "last_name")
 	private String lastName;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name= "role_id")
 	private Role role ;
 
@@ -31,9 +31,6 @@ public class Account extends AbstractEntity{
 	}
 	
 	public Account(String username, String password, Role role) {
-		Objects.requireNonNull(username);
-		Objects.requireNonNull(password);
-		Objects.requireNonNull(role);
 		
 		this.username= username;
 		this.password= password;
@@ -55,15 +52,6 @@ public class Account extends AbstractEntity{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-//	public Set<Role> getRoles() {
-//		return Collections.unmodifiableSet(roles);
-//	}
-
-//	public void addRole(Role role) {
-//		Objects.requireNonNull(role);
-//		roles.add(role);
-//	}
 
 	
 	@Override
